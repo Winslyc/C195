@@ -1,4 +1,6 @@
-package Helper;
+package DAO;
+
+import Helper.JDBC;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
