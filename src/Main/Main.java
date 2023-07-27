@@ -9,15 +9,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.TimeZone;
 
 public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
         JDBC.openConnection();
+        TimeZone obj = TimeZone.getDefault();
+        System.out.println(obj.getDisplayName());
         launch(args);
-        int rows =CustomerAccess.insert("Winsly Cyrius", "RandoAddress32", "2151", "4049487338");
-        System.out.println(rows);
-    JDBC.closeConnection();
+        JDBC.closeConnection();
     }
 
     @Override
