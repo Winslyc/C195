@@ -2,6 +2,7 @@ package Main;
 
 import DAO.CustomerAccess;
 import DAO.FruitsQuery;
+import Helper.Alerter;
 import Helper.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +17,6 @@ import java.util.TimeZone;
 public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
-        JDBC.openConnection();
-        FruitsQuery.select();
         TimeZone obj = TimeZone.getDefault();
         System.out.println(obj.getDisplayName());
         launch(args);
@@ -31,5 +30,6 @@ public class Main extends Application {
         primaryStage.setTitle("Client Schedules");
         primaryStage.setScene(scene);
         primaryStage.show();
+        JDBC.openConnection();
     }
 }
