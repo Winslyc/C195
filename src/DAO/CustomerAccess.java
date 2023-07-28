@@ -14,6 +14,8 @@ public abstract class CustomerAccess {
         ps.setString(3, Postal_Code);
         ps.setString(4, Phone);
         int rows = ps.executeUpdate();
+
         return rows;
     }
+
 }
