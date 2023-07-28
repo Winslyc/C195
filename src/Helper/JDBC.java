@@ -23,7 +23,7 @@ public abstract class JDBC {
         }
         catch(Exception e)
         {
-            Alerter.displayErrorAlert("Server Error", "Can't connect,", "Error:" + e.getMessage());
+            Alerter.displayErrorAlert("Server Error",  e.getMessage());
             System.out.println("Error:" + e.getMessage());
         }
     }
