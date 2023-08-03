@@ -9,8 +9,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UserAccess {
-    public static User currentUser;
 
+    public static User currentUser;
+    private  String username;
+
+    /**
+     * @return current logged in user
+     */
     public static User getCurrentUser(){
         return currentUser;
     }
@@ -20,19 +25,19 @@ public class UserAccess {
      * @return true if login is succesful
      */
     public static Boolean login(String userName, String password) throws SQLException {
-       String sql = "SELECT * FROM USERS WHERE username = ? AND password = ?";
+       String sql = "SELECT * FROM USERS WHERE User_Name = ? AND Password = ?";
        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
        ps.setString(1, userName);
        ps.setString(2,password);
        ResultSet rs = ps.executeQuery();
        if(rs.next()){
+
+          currentUser = new User();
+          currentUser.setUsername(rs.getString("User_Name"));
+          System.out.println(currentUser.getUsername());
            return true;
        }
        return false;
     }
-        public static void select() throws SQLException{
-        String sql = "SELECT * FROM USERS WHERE Username = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-    }
+
 }
