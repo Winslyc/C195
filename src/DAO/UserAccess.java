@@ -9,17 +9,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UserAccess {
-
+    /**
+     * The Current USer application wide.
+     */
     public static User currentUser;
+    /**
+     * Username of the current User.
+     */
     private  String username;
-
     /**
      * @return current logged in user
      */
     public static User getCurrentUser(){
         return currentUser;
     }
-
     /**
      * Boolean login checks user name and password from database
      * @return true if login is succesful

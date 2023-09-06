@@ -2,8 +2,8 @@ package Controller;
 
 
 import DAO.UserAccess;
+import Helper.ActivityLogger;
 import Helper.Alerter;
-import Helper.JDBC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 
 public class LoginPageController implements Initializable {
     /**
@@ -72,10 +70,13 @@ public class LoginPageController implements Initializable {
      */
     @FXML
     private void onSubmitLogin(ActionEvent event) throws IOException {
+
         try {
             ResourceBundle rb = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
+
             if(UserAccess.login(UsernameField.getText(), PasswordField.getText())){
-                Parent parent = FXMLLoader.load(getClass().getResource("/View/Main Page.fxml"));
+                ActivityLogger.logActivity(UsernameField.getText(), true);
+                Parent parent = FXMLLoader.load(getClass().getResource("/View/MainPage.fxml"));
                 Scene scene = new Scene(parent);
                 Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
@@ -84,6 +85,10 @@ public class LoginPageController implements Initializable {
             }
             else{
                 Alerter.displayErrorAlert(rb.getString("Invalid Username and Password Combination"), rb.getString("Your username or password is incorrect, please try again."));
+                ActivityLogger.logActivity(UsernameField.getText(), false);
+                UsernameField.setText("");
+                PasswordField.setText("");
+
                 System.out.println("Fail");
             }
         } catch (SQLException e) {

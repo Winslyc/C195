@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 import java.util.TimeZone;
 
 public class Main extends Application {
-
     public static void main(String[] args) throws SQLException {
         Locale locale= Locale.getDefault();
 
@@ -31,6 +30,11 @@ public class Main extends Application {
         JDBC.closeConnection();
     }
 
+    /**
+     * Starts the application client scheduling application.
+     * @param primaryStage The Primary stage container that will hold the application view.
+     * @throws IOException
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../View/LoginPage.fxml"));
