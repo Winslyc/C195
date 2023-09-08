@@ -1,0 +1,5 @@
+2023-09-06 | 14:49:19.199560100 | User: Test | Login Succesful
+2023-09-07 | 15:51:28.792196 | User: Admin | Login Succesful
+2023-09-07 | 15:54:20.387040800 | User: test | Login Succesful
+2023-09-07 | 15:55:30.574139300 | User: test | Login Succesful
+2023-09-07 | 16:07:38.102569200 | User: Admin | Login Succesful
