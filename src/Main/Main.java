@@ -1,5 +1,6 @@
 package Main;
 
+import DAO.CustomerAccess;
 import Helper.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +29,7 @@ public class Main extends Application {
         System.out.println(ZoneId.systemDefault());
         launch(args);
         JDBC.closeConnection();
-    }
+   }
 
     /**
      * Starts the application client scheduling application.
@@ -36,12 +37,13 @@ public class Main extends Application {
      * @throws IOException
      */
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../View/LoginPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600,400);
         primaryStage.setTitle("Client Schedules");
         primaryStage.setScene(scene);
         primaryStage.show();
         JDBC.openConnection();
+        CustomerAccess.select();
     }
 }

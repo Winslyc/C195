@@ -5,17 +5,22 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerController">
+<AnchorPane prefHeight="400.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerController">
    <children>
-      <TableView layoutX="14.0" layoutY="2.0" prefHeight="267.0" prefWidth="567.0">
+      <TableView layoutX="14.0" layoutY="2.0" prefHeight="349.0" prefWidth="847.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="ID" />
-          <TableColumn prefWidth="75.0" text="Name" />
-            <TableColumn prefWidth="75.0" text="Address" />
-            <TableColumn prefWidth="75.0" text="Postal Code" />
-            <TableColumn prefWidth="75.0" text="Phone" />
+          <TableColumn id="idColumn" fx:id="idColumn" prefWidth="40.0" text="ID" />
+          <TableColumn id="nameColumn" fx:id="nameColumn" prefWidth="82.0" text="Name" />
+            <TableColumn id="addressColumn" fx:id="addressColumn" prefWidth="134.0" text="Address" />
+            <TableColumn id="postalCodeColumn" fx:id="postalCodeColumn" prefWidth="71.0" text="Postal Code" />
+            <TableColumn id="phoneColumn" fx:id="phoneColumn" prefWidth="86.0" text="Phone" />
+            <TableColumn id="dateCreatedColumn" fx:id="dateCreatedColumn" prefWidth="89.0" text="Date Created" />
+            <TableColumn id="createdByColumn" fx:id="createdByColumn" prefWidth="77.0" text="Created By" />
+            <TableColumn id="lastUpdatedColumn" fx:id="lastUpdatedColumn" prefWidth="82.0" text="Last Update" />
+            <TableColumn id="lastUpdatedByColumn" fx:id="lastUpdatedByColumn" prefWidth="110.0" text="Last Updated By" />
+            <TableColumn id="divisionIdColumn" fx:id="divisionIdColumn" prefWidth="75.0" text="Division ID" />
         </columns>
       </TableView>
-      <Button fx:id="addButton" layoutX="382.0" layoutY="361.0" mnemonicParsing="false" onAction="#onClickAddButton" text="Add" />
+      <Button fx:id="addButton" layoutX="587.0" layoutY="361.0" mnemonicParsing="false" onAction="#onClickAddButton" text="Add" />
    </children>
 </AnchorPane>

@@ -9,6 +9,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,9 +18,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
-    @FXML
-    protected Button addButton;
-
+    @FXML protected Button addButton;
+    @FXML TableColumn idColumn;
+    @FXML TableColumn nameColumn;
+    @FXML TableColumn addressColumn;
+    @FXML TableColumn postalCodeColumn;
+    @FXML TableColumn phoneColumn;
+    @FXML TableColumn dateCreatedColumn;
+    @FXML TableColumn createdByColumn;
+    @FXML TableColumn lastUpdatedColumn;
+    @FXML TableColumn lastUpdatedByColumn;
+    @FXML TableColumn divisionIdColumn;
 
 
     public void onClickAddButton(ActionEvent actionEvent) throws IOException {

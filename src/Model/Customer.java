@@ -10,6 +10,20 @@ public class Customer {
     private String createdBy;
     private String lastUpdate;
     private String lastUpdateBy;
+    private int divisionID;
+
+    public Customer(int customerId, String customerName, String address, String postalCode, String phoneNumber, String createDate, String createdBy, String lastUpdate, String lastUpdateBy, int divisionID) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phoneNumber = phoneNumber;
+        this.createDate = createDate;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdateBy = lastUpdateBy;
+        this.divisionID = divisionID;
+    }
 
     public int getCustomerId() {
         return customerId;
