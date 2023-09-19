@@ -1,18 +1,24 @@
 package Model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.Date;
+
 public class Customer {
+    public static ObservableList<Customer>Customers = FXCollections.observableArrayList();
     private int customerId;
     private String customerName;
     private String address;
     private String postalCode;
     private String phoneNumber;
-    private String createDate;
+    private Date createDate;
     private String createdBy;
-    private String lastUpdate;
+    private Date lastUpdate;
     private String lastUpdateBy;
-    private int divisionID;
+    private int division;
 
-    public Customer(int customerId, String customerName, String address, String postalCode, String phoneNumber, String createDate, String createdBy, String lastUpdate, String lastUpdateBy, int divisionID) {
+    public Customer(int customerId, String customerName, String address, String postalCode, String phoneNumber, Date createDate, String createdBy, Date lastUpdate, String lastUpdateBy, int divisionID) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
@@ -22,7 +28,7 @@ public class Customer {
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdateBy = lastUpdateBy;
-        this.divisionID = divisionID;
+        this.division = divisionID;
     }
 
     public int getCustomerId() {
@@ -40,16 +46,20 @@ public class Customer {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
     public String getCreatedBy() {
         return createdBy;
     }
-    public String getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
     public String getLastUpdateBy() {
         return lastUpdateBy;
+    }
+
+    public int getDivision() {
+        return division;
     }
 }

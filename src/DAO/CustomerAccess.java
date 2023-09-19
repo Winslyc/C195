@@ -1,12 +1,12 @@
 package DAO;
 
 import Helper.JDBC;
+import Model.Customer;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.PropertyPermission;
 
 public abstract class CustomerAccess {
     public static int insert(String Name, String Address, String Postal_Code, String Phone) throws SQLException {
@@ -20,7 +20,7 @@ public abstract class CustomerAccess {
 
         return rows;
     }
-    public static void select() throws  SQLException{
+    public static void selectAllCustomers() throws  SQLException{
         String sql = "SELECT * FROM Customers";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -35,9 +35,8 @@ public abstract class CustomerAccess {
             Date LastUpdate = rs.getDate("Last_Update");
             String LastUpdatedBy = rs.getString("Last_Updated_By");
             int divisionId = rs. getInt("Division_ID");
-            System.out.println(customerId + " | " + customerName + " | " + address + " | " + postalCode + " | "
-                    + " | " + phone + " | " + createDate + " | " + createdBy + " | " +  LastUpdate  + " | " + LastUpdatedBy
-                    + " | " + divisionId);
+            Customer.Customers.add(new Customer(customerId, customerName, address, postalCode, phone, createDate,createdBy,LastUpdate,LastUpdatedBy,divisionId));
+
         }
 
 
