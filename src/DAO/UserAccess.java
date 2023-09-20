@@ -37,7 +37,6 @@ public class UserAccess {
 
           currentUser = new User();
           currentUser.setUsername(rs.getString("User_Name"));
-          System.out.println(currentUser.getUsername());
            return true;
        }
        return false;

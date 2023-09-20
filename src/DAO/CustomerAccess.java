@@ -35,7 +35,9 @@ public abstract class CustomerAccess {
             Date LastUpdate = rs.getDate("Last_Update");
             String LastUpdatedBy = rs.getString("Last_Updated_By");
             int divisionId = rs. getInt("Division_ID");
-            Customer.Customers.add(new Customer(customerId, customerName, address, postalCode, phone, createDate,createdBy,LastUpdate,LastUpdatedBy,divisionId));
+            Customer.Customers.add(new Customer(customerId, customerName,
+                    address, postalCode, phone, createDate,createdBy
+                    ,LastUpdate,LastUpdatedBy,divisionId));
 
         }
 
