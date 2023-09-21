@@ -1,6 +1,7 @@
 package DAO;
 
 import Helper.JDBC;
+import Model.Country;
 import Model.Divisions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DivisionsAccess {
 
@@ -22,8 +24,19 @@ public class DivisionsAccess {
             int country_ID = rs.getInt("COUNTRY_ID");
             Divisions firstLevelDivision = new Divisions(divisionName,divisionID,  country_ID);
             firstLevelDivisionsObservableList.add(firstLevelDivision);
+          System.out.println(firstLevelDivision.getDivisionName());
         }
         return firstLevelDivisionsObservableList;
+    }
+    public static ObservableList<Country> getAllCountries() throws  SQLException{
+        ObservableList<Country> countriesList  = FXCollections.observableArrayList();
+        String sql ="Select * from Countries";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            countriesList.add(new Country(rs.getString("Country"), rs.getInt("Country_ID")));
+        }
+        return countriesList;
     }
 
 
