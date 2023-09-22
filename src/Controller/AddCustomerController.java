@@ -3,6 +3,7 @@ package Controller;
 import DAO.DivisionsAccess;
 import Model.Country;
 import Model.Divisions;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,19 +42,28 @@ public class AddCustomerController implements Initializable {
         }
 
     }
-    @FXML private void onSetCountry(){
-        if(countryComboBox.getSelectionModel().getSelectedItem() == "U.S"){
-            for(int i = 0; i<allDivisions.size(); i++){
-                if(allDivisions.get(i).getCountryID() == 1){
-                    System.out.println(allDivisions.get(i).getDivisionName());
-                    stateComboBox.getItems().add(allDivisions.get(i).getDivisionName());
-                }
+    @FXML private void onSetCountry(ActionEvent event){
+        ObservableList fDivisionsUS = FXCollections.observableArrayList();
+        ObservableList fDivisionsUK = FXCollections.observableArrayList();
+        ObservableList fDivisionsCA = FXCollections.observableArrayList();
+        String selectedCountry = (String) countryComboBox.getSelectionModel().getSelectedItem();
+        allDivisions.forEach(firstLevelDivision->{
+            if(firstLevelDivision.getCountryID()==1){
+                fDivisionsUS.add(firstLevelDivision.getDivisionName());
+            } else if(firstLevelDivision.getCountryID()==2){
+                fDivisionsUK.add(firstLevelDivision.getDivisionName());
+            }else if(firstLevelDivision.getCountryID()==3){
+                fDivisionsCA.add(firstLevelDivision.getDivisionName());
             }
-        }else if(countryComboBox.getSelectionModel().getSelectedItem() == "U.K"){
-
-        }else if(countryComboBox.getSelectionModel().getSelectedItem()=="Canada"){
-
+        });
+        if(selectedCountry == "U.S"){
+            stateComboBox.setItems(fDivisionsUS);
+        } else if(selectedCountry == "U.K"){
+            stateComboBox.setItems(fDivisionsUK);
+        } else if(selectedCountry =="Canada"){
+            stateComboBox.setItems(fDivisionsCA);
+        }
         }
 
     }
-}
+
