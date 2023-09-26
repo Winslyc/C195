@@ -45,5 +45,6 @@ public class Main extends Application {
         primaryStage.show();
         JDBC.openConnection();
         CustomerAccess.selectAllCustomers();
+
     }
 }

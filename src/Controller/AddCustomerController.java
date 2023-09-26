@@ -2,6 +2,7 @@ package Controller;
 
 import DAO.DivisionsAccess;
 import Model.Country;
+import Model.Customer;
 import Model.Divisions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -27,6 +29,15 @@ public class AddCustomerController implements Initializable {
 
     private ObservableList<Divisions> allDivisions;
     private ObservableList<Country> countries;
+    //Adds Customers to  the list of customers.
+    public void onSubmitAdd(ActionEvent event) throws SQLException{
+        int id = Integer.parseInt(idTextField.getText());
+        String name = nameTextField.getText();
+        String address = addressTextField.getText();
+        String postal = postalCodeTextField.getText();
+        String phone = phoneTextField.getText();
+    }
+
 
     public void setComboBoxes() throws SQLException {
         allDivisions = DivisionsAccess.getAllDivisions();
@@ -56,12 +67,16 @@ public class AddCustomerController implements Initializable {
                 fDivisionsCA.add(firstLevelDivision.getDivisionName());
             }
         });
-        if(selectedCountry == "U.S"){
-            stateComboBox.setItems(fDivisionsUS);
-        } else if(selectedCountry == "U.K"){
-            stateComboBox.setItems(fDivisionsUK);
-        } else if(selectedCountry =="Canada"){
-            stateComboBox.setItems(fDivisionsCA);
+        switch (selectedCountry){
+            case "U.S":
+                stateComboBox.setItems(fDivisionsUS);
+                break;
+            case "UK":
+                stateComboBox.setItems(fDivisionsUK);
+                break;
+            case "Canada":
+                stateComboBox.setItems(fDivisionsCA);
+                break;
         }
         }
 

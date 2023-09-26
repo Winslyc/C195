@@ -18,7 +18,11 @@ public class Customer {
     private String lastUpdateBy;
     private int division;
 
-    public Customer(int customerId, String customerName, String address, String postalCode, String phoneNumber, Date createDate, String createdBy, Date lastUpdate, String lastUpdateBy, int divisionID) {
+    public Customer(int customerId, String customerName,
+                    String address, String postalCode,
+                    String phoneNumber, Date createDate,
+                    String createdBy, Date lastUpdate,
+                    String lastUpdateBy, int divisionID) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
