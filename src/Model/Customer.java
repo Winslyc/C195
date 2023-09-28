@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import java.sql.Date;
 
 public class Customer {
-    public static ObservableList<Customer>Customers = FXCollections.observableArrayList();
+    public static ObservableList<Customer> customers = FXCollections.observableArrayList();
     private int customerId;
     private String customerName;
     private String address;
@@ -35,6 +35,7 @@ public class Customer {
         this.division = divisionID;
     }
 
+
     public int getCustomerId() {
         return customerId;
     }
@@ -61,6 +62,14 @@ public class Customer {
     }
     public String getLastUpdateBy() {
         return lastUpdateBy;
+    }
+
+    public Customer(int customerId, String customerName, String address, String postalCode, String phoneNumber) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phoneNumber = phoneNumber;
     }
 
     public int getDivision() {

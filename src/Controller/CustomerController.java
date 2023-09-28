@@ -2,7 +2,6 @@ package Controller;
 
 import Model.Customer;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -48,7 +46,7 @@ public class CustomerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        customerTable.setItems(Customer.Customers);
+        customerTable.setItems(Customer.customers);
         idColumn.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerName"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("address"));

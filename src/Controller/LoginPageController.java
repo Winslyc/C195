@@ -4,6 +4,7 @@ package Controller;
 import DAO.UserAccess;
 import Helper.ActivityLogger;
 import Helper.Alerter;
+import Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -75,6 +76,7 @@ public class LoginPageController implements Initializable {
             ResourceBundle rb = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
 
             if(UserAccess.login(UsernameField.getText(), PasswordField.getText())){
+                User currentUser = new User(UsernameField.getText(), ZoneId.systemDefault());
                 ActivityLogger.logActivity(UsernameField.getText(), true);
                 Parent parent = FXMLLoader.load(getClass().getResource("/View/MainPage.fxml"));
                 Scene scene = new Scene(parent);
@@ -89,7 +91,7 @@ public class LoginPageController implements Initializable {
                 UsernameField.setText("");
                 PasswordField.setText("");
 
-                System.out.println("Fail");
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

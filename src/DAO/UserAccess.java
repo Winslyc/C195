@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.ZoneId;
 
 public class UserAccess {
     /**
@@ -35,8 +36,7 @@ public class UserAccess {
        ResultSet rs = ps.executeQuery();
        if(rs.next()){
 
-          currentUser = new User();
-          currentUser.setUsername(rs.getString("User_Name"));
+          currentUser = new User(rs.getString("User_Name"), ZoneId.systemDefault());
            return true;
        }
        return false;

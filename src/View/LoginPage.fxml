@@ -9,10 +9,9 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginPageController">
    <children>
-      <Pane layoutX="363.0" prefHeight="93.0" prefWidth="237.0" style="-fx-background-color: #1dfa32;">
+      <Pane layoutX="363.0" prefHeight="43.0" prefWidth="237.0" style="-fx-background-color: #1dfa32;">
          <children>
-            <Label fx:id="Location" layoutY="14.0" prefHeight="17.0" prefWidth="237.0" text="Location:" />
-            <Label fx:id="Date" layoutX="7.0" layoutY="55.0" text="Username" />
+            <Label fx:id="Location" layoutY="13.0" prefHeight="17.0" prefWidth="237.0" text="Location:" />
          </children>
       </Pane>
       <PasswordField fx:id="PasswordField" layoutX="199.0" layoutY="257.0" promptText="Password" />
