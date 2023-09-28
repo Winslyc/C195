@@ -9,11 +9,18 @@ import Model.Divisions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -36,18 +43,33 @@ public class AddCustomerController implements Initializable {
     private ObservableList fDivisionsCA;
     private ObservableList<Divisions> allDivisions;
     private ObservableList<Country> countries;
+    private Divisions currentDivision;
     //Adds Customers to  the list of customers.
-    public void onSubmitAdd(ActionEvent event) throws SQLException{
+    public void onSubmitAdd(ActionEvent event) throws SQLException, IOException {
         int id = Integer.parseInt(idTextField.getText());
         String name = nameTextField.getText();
         String address = addressTextField.getText();
         String postal = postalCodeTextField.getText();
         String phone = phoneTextField.getText();
+        int divisionID = 0;
+       for(Divisions selectedDiv: allDivisions){
+           if(selectedDiv.getDivisionName() == stateComboBox.getSelectionModel().getSelectedItem()){
+               divisionID = selectedDiv.getDivisionId();
+           }
+       }
      //   Divisions division = new Divisions(countryComboBox.getSelectionModel().getSelectedItem().toString(),)
-        Customer newCustomer = new Customer(id, name, address, postal, phone);
+        Customer newCustomer = new Customer(id, name, address, postal, phone,divisionID);
 
         CustomerAccess.addcustomer(newCustomer);
+        returnToCustomer(event);
+    }
 
+    private void returnToCustomer(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/Customer.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
 
@@ -91,7 +113,5 @@ public class AddCustomerController implements Initializable {
                 break;
         }
         }
-
-
     }
 

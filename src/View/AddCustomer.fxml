@@ -22,7 +22,7 @@
       <Label layoutX="300.0" layoutY="52.0" prefHeight="17.0" prefWidth="60.0" text="Country" />
       <ComboBox fx:id="stateComboBox" layoutX="300.0" layoutY="147.0" prefWidth="150.0" promptText="Enter a selection" />
       <Label layoutX="300.0" layoutY="126.0" prefHeight="17.0" prefWidth="60.0" text="State" />
-      <Button fx:id="addButton" layoutX="424.0" layoutY="361.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="addButton" layoutX="424.0" layoutY="361.0" mnemonicParsing="false" onAction="#onSubmitAdd" text="Add" />
       <Button fx:id="cancelButton" layoutX="498.0" layoutY="361.0" mnemonicParsing="false" text="Cancel" />
    </children>
 </AnchorPane>

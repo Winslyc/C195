@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO.CustomerAccess;
 import Model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
@@ -34,6 +36,9 @@ public class CustomerController implements Initializable {
     @FXML TableColumn divisionIdColumn;
 
 
+    public void refreshCustomersList(){
+
+    }
     public void onClickAddButton(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
         Scene scene = new Scene(parent);
@@ -46,6 +51,11 @@ public class CustomerController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            Customer.customers.setAll(CustomerAccess.selectAllCustomers());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         customerTable.setItems(Customer.customers);
         idColumn.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Customer, String>("customerName"));

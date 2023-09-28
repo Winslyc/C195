@@ -2,11 +2,13 @@ package DAO;
 
 import Helper.JDBC;
 import Model.Customer;
+import Model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public abstract class CustomerAccess {
     public static int insert(String Name, String Address, String Postal_Code, String Phone) throws SQLException {
@@ -16,14 +18,16 @@ public abstract class CustomerAccess {
         ps.setString(2, Address);
         ps.setString(3, Postal_Code);
         ps.setString(4, Phone);
+
         int rows = ps.executeUpdate();
 
         return rows;
     }
-    public static void selectAllCustomers() throws  SQLException{
+    public static ObservableList selectAllCustomers() throws  SQLException{
         String sql = "SELECT * FROM Customers";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
+        ObservableList <Customer> allCustomers = FXCollections.observableArrayList();
         while(rs.next()){
             int customerId= rs.getInt("Customer_ID");
             String customerName = rs.getString("Customer_Name");
@@ -35,15 +39,31 @@ public abstract class CustomerAccess {
             Date LastUpdate = rs.getDate("Last_Update");
             String LastUpdatedBy = rs.getString("Last_Updated_By");
             int divisionId = rs. getInt("Division_ID");
-            Customer.customers.add(new Customer(customerId, customerName,
+
+            allCustomers.add(new Customer(customerId, customerName,
                     address, postalCode, phone, createDate,createdBy
                     ,LastUpdate,LastUpdatedBy,divisionId));
 
         }
 
 
+        return allCustomers;
     }
 
-    public static void addcustomer(Customer newCustomer) {
+    public static void addcustomer(Customer newCustomer) throws SQLException {
+        String sql = "INSERT INTO customers(Customer_ID, Customer_name, Address, Postal_Code, Phone" + "" +
+                ",Create_Date, Created_By,Last_Update,Last_Updated_By,Division_ID) VALUES(?, ?, ?, ?,?,?,?,?,?,?)";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, newCustomer.getCustomerId());
+        ps.setString(2,newCustomer.getCustomerName());
+        ps.setString(3, newCustomer.getAddress());
+        ps.setString(4, newCustomer.getPostalCode());
+        ps.setString(5, newCustomer.getPhoneNumber());
+        ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
+        ps.setString(7, UserAccess.currentUser.getUsername());
+        ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
+        ps.setString(9, UserAccess.getCurrentUser().getUsername());
+        ps.setInt(10,newCustomer.getDivision());
+        ps.executeUpdate();
     }
 }
