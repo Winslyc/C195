@@ -2,13 +2,11 @@ package DAO;
 
 import Helper.JDBC;
 import Model.Customer;
-import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 public abstract class CustomerAccess {
     public static int insert(String Name, String Address, String Postal_Code, String Phone) throws SQLException {
@@ -49,7 +47,13 @@ public abstract class CustomerAccess {
 
         return allCustomers;
     }
+    public static void deleteCustomer(Customer newCustomer) throws SQLException{
+        String sql = "DELETE FROM CUSTOMERS WHERE(Customer_ID = ?)";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, newCustomer.getCustomerId());
+        ps.executeUpdate();
 
+    }
     public static void addcustomer(Customer newCustomer) throws SQLException {
         String sql = "INSERT INTO customers(Customer_ID, Customer_name, Address, Postal_Code, Phone" + "" +
                 ",Create_Date, Created_By,Last_Update,Last_Updated_By,Division_ID) VALUES(?, ?, ?, ?,?,?,?,?,?,?)";

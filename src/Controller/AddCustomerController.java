@@ -45,6 +45,9 @@ public class AddCustomerController implements Initializable {
     private ObservableList<Country> countries;
     private Divisions currentDivision;
     //Adds Customers to  the list of customers.
+    public void onClickCancel(ActionEvent event) throws IOException {
+        returnToCustomer(event);
+    }
     public void onSubmitAdd(ActionEvent event) throws SQLException, IOException {
         int id = Integer.parseInt(idTextField.getText());
         String name = nameTextField.getText();
@@ -82,7 +85,7 @@ public class AddCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             setComboBoxes();
-            idTextField.setText(String.valueOf(customers.get(customers.size()-1).getCustomerId()+1));
+            idTextField.setText(String.valueOf(customers.get(customers.size()-1).getCustomerId()+2));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

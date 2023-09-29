@@ -34,10 +34,21 @@ public class CustomerController implements Initializable {
     @FXML TableColumn lastUpdatedColumn;
     @FXML TableColumn lastUpdatedByColumn;
     @FXML TableColumn divisionIdColumn;
+    private static Customer selectedCustomer;
 
 
-    public void refreshCustomersList(){
+    public void updateCustomer(ActionEvent actionEvent) throws IOException {
+        selectedCustomer= (Customer) customerTable.getSelectionModel().getSelectedItem();
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/UpdateCustomer.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
 
+    }
+    public void refreshCustomersList() throws SQLException {
+        Customer.customers.setAll(CustomerAccess.selectAllCustomers());
+        customerTable.setItems(Customer.customers);
     }
     public void onClickAddButton(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
@@ -48,13 +59,19 @@ public class CustomerController implements Initializable {
 
 
     }
+    public void onClickDeleteButton(ActionEvent actionEvent) throws IOException, SQLException {
+    Customer toDelete = (Customer) customerTable.getSelectionModel().getSelectedItem();
+    CustomerAccess.deleteCustomer(toDelete);
+    refreshCustomersList();
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            Customer.customers.setAll(CustomerAccess.selectAllCustomers());
+           refreshCustomersList();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+System.out.println(e);
         }
         customerTable.setItems(Customer.customers);
         idColumn.setCellValueFactory(new PropertyValueFactory<Customer, Integer>("customerId"));
