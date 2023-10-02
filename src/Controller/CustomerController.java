@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.CustomerAccess;
+import Helper.Alerter;
 import Model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,16 +36,35 @@ public class CustomerController implements Initializable {
     @FXML TableColumn lastUpdatedColumn;
     @FXML TableColumn lastUpdatedByColumn;
     @FXML TableColumn divisionIdColumn;
-    private static Customer selectedCustomer;
+    public static Customer selectedCustomer;
 
 
     public void updateCustomer(ActionEvent actionEvent) throws IOException {
         selectedCustomer= (Customer) customerTable.getSelectionModel().getSelectedItem();
-        Parent parent = FXMLLoader.load(getClass().getResource("/View/UpdateCustomer.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        if(selectedCustomer != null){
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/UpdateCustomer.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }else{
+            Alerter.displayErrorAlert("No Customer Selected", "Please select a Customer to edit.");
+        }
+
+
+
+    }
+    public void onClickCancel(ActionEvent actionEvent) throws IOException {
+       if( Alerter.confirmAction("Cancel?","Are you sure you would like to return to the main page" )){
+           Parent parent = FXMLLoader.load(getClass().getResource("/View/MainPage.fxml"));
+           Scene scene = new Scene(parent);
+           Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+           stage.setScene(scene);
+           stage.show();
+
+       }else{
+
+       }
 
     }
     public void refreshCustomersList() throws SQLException {

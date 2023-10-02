@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerController">
+<AnchorPane prefHeight="400.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CustomerController">
    <children>
       <TableView fx:id="customerTable" layoutX="14.0" layoutY="2.0" prefHeight="349.0" prefWidth="847.0">
         <columns>
@@ -21,8 +21,9 @@
             <TableColumn id="divisionIdColumn" fx:id="divisionIdColumn" prefWidth="75.0" text="Division ID" />
         </columns>
       </TableView>
-      <Button fx:id="addButton" layoutX="587.0" layoutY="361.0" mnemonicParsing="false" onAction="#onClickAddButton" text="Add" />
-      <Button fx:id="deleteButon" layoutX="684.0" layoutY="361.0" mnemonicParsing="false" onAction="#onClickDeleteButton" text="Delete" />
-      <Button fx:id="CancelButton" layoutX="798.0" layoutY="361.0" mnemonicParsing="false" onAction="#onClickCancel" text="Delete" />
+      <Button fx:id="addButton" layoutX="620.0" layoutY="361.0" mnemonicParsing="false" onAction="#onClickAddButton" text="Add" />
+      <Button fx:id="deleteButon" layoutX="732.0" layoutY="361.0" mnemonicParsing="false" onAction="#onClickDeleteButton" text="Delete" />
+      <Button fx:id="CancelButton" layoutX="798.0" layoutY="361.0" mnemonicParsing="false" onAction="#onClickCancel" text="Exit" />
+      <Button fx:id="updateButton" layoutX="669.0" layoutY="361.0" mnemonicParsing="false" onAction="#updateCustomer" text="Update" />
    </children>
 </AnchorPane>
