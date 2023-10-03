@@ -80,6 +80,12 @@ public class UpdateCustomerController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        idTextField.clear();
+        nameTextField.clear();
+        addressTextField.clear();
+        postalCodeTextField.clear();
+        stateComboBox.getSelectionModel().clearSelection();
+        countryComboBox.getSelectionModel().clearSelection();
         try {
             setComboBoxes();
             idTextField.setText(String.valueOf(customers.get(customers.size()-1).getCustomerId()+2));
@@ -93,14 +99,29 @@ public class UpdateCustomerController implements Initializable {
         phoneTextField.setText(selectedCustomer.getPhoneNumber());
         allDivisions.forEach((i) -> {
         int selectedDivisions = i.getDivisionId();
-        if(selectedDivisions == selectedCustomer.getDivision()){
-            System.out.println(i.getDivisionName() + " " +  i.getCountryID());
-            }
-
-        });
+        if(selectedDivisions == selectedCustomer.getDivision()) {
+            System.out.println(i.getDivisionName() + " " + i.getCountryID());
+        switch(i.getCountryID()){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
+        }});
 
     }
-    @FXML private void onSetCountry(ActionEvent event){
+
+    private void SetCountry(String country) {
+        switch (country){
+            case "U.S": stateComboBox.setItems(fDivisionsUS);
+            case "U.K": stateComboBox.setItems(fDivisionsUK);
+            case "Canada": stateComboBox.setItems(fDivisionsCA);
+        }
+    }
+
+    @FXML private void onSetCountry(){
          fDivisionsUS = FXCollections.observableArrayList();
          fDivisionsUK = FXCollections.observableArrayList();
          fDivisionsCA = FXCollections.observableArrayList();
