@@ -72,4 +72,21 @@ public abstract class CustomerAccess {
         ps.setInt(10,newCustomer.getDivision());
         ps.executeUpdate();
     }
+
+    public static void updateCustomer(int id, Customer updatedCustomer) throws SQLException {
+        String sql = "UPDATE customers " +
+                "SET Customer_ID = ?, Customer_Name = ?, Address = ?, Postal_Code= ?, Phone = ?, Last_Update = ?,  Last_Updated_By = ?, Division_ID = ? " +
+                "WHERE Customer_ID = ? ";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, id);
+        ps.setString(2, updatedCustomer.getCustomerName());
+        ps.setString(3, updatedCustomer.getAddress());
+        ps.setString(4,updatedCustomer.getPostalCode());
+        ps.setString(5,updatedCustomer.getPhoneNumber());
+        ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));
+        ps.setString(7, UserAccess.getCurrentUser().getUsername());
+        ps.setInt(8, updatedCustomer.getDivision());
+        ps.setInt(9, id);
+        ps.executeUpdate();
+    }
 }

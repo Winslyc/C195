@@ -57,10 +57,10 @@ public class UpdateCustomerController implements Initializable {
                divisionID = selectedDiv.getDivisionId();
            }
        }
-     //   Divisions division = new Divisions(countryComboBox.getSelectionModel().getSelectedItem().toString(),)
-        Customer newCustomer = new Customer(id, name, address, postal, phone,divisionID, DivisionsAccess.getDivision(divisionID));
 
-        CustomerAccess.addcustomer(newCustomer);
+        Customer updatedCustomer = new Customer(id, name, address, postal, phone,divisionID, DivisionsAccess.getDivision(divisionID));
+
+        CustomerAccess.updateCustomer(id, updatedCustomer);
         returnToCustomer(event);
     }
 
