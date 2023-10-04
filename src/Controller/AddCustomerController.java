@@ -61,7 +61,7 @@ public class AddCustomerController implements Initializable {
            }
        }
      //   Divisions division = new Divisions(countryComboBox.getSelectionModel().getSelectedItem().toString(),)
-        Customer newCustomer = new Customer(id, name, address, postal, phone,divisionID);
+        Customer newCustomer = new Customer(id, name, address, postal, phone,divisionID, DivisionsAccess.getDivision(divisionID));
 
         CustomerAccess.addcustomer(newCustomer);
         returnToCustomer(event);

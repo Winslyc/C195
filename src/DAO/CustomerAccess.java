@@ -2,6 +2,7 @@ package DAO;
 
 import Helper.JDBC;
 import Model.Customer;
+import Model.Divisions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -37,10 +38,11 @@ public abstract class CustomerAccess {
             Date LastUpdate = rs.getDate("Last_Update");
             String LastUpdatedBy = rs.getString("Last_Updated_By");
             int divisionId = rs. getInt("Division_ID");
-
+            ObservableList<Divisions> allTheDivisions = FXCollections.observableArrayList();
+           Divisions divisions = DivisionsAccess.getDivision(divisionId);
             allCustomers.add(new Customer(customerId, customerName,
                     address, postalCode, phone, createDate,createdBy
-                    ,LastUpdate,LastUpdatedBy,divisionId));
+                    ,LastUpdate,LastUpdatedBy,divisionId, divisions));
 
         }
 

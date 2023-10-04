@@ -38,7 +38,17 @@ public class DivisionsAccess {
         }
         return countriesList;
     }
-
+public static Divisions getDivision(int divisionID) throws SQLException {
+        String sql = "Select * from first_level_divisions WHERE Division_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, divisionID);
+        ResultSet rs = ps.executeQuery();
+        Divisions divisions = null;
+        while(rs.next()) {
+            divisions = new Divisions(rs.getString("Division"), rs.getInt("Division_ID"), rs.getInt("Country_ID"));
+        }
+    return divisions;
+}
 
 }
 

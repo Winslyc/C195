@@ -58,7 +58,7 @@ public class UpdateCustomerController implements Initializable {
            }
        }
      //   Divisions division = new Divisions(countryComboBox.getSelectionModel().getSelectedItem().toString(),)
-        Customer newCustomer = new Customer(id, name, address, postal, phone,divisionID);
+        Customer newCustomer = new Customer(id, name, address, postal, phone,divisionID, DivisionsAccess.getDivision(divisionID));
 
         CustomerAccess.addcustomer(newCustomer);
         returnToCustomer(event);
@@ -97,21 +97,28 @@ public class UpdateCustomerController implements Initializable {
         addressTextField.setText(selectedCustomer.getAddress());
         postalCodeTextField.setText(selectedCustomer.getPostalCode());
         phoneTextField.setText(selectedCustomer.getPhoneNumber());
-        allDivisions.forEach((i) -> {
-        int selectedDivisions = i.getDivisionId();
-        if(selectedDivisions == selectedCustomer.getDivision()) {
-            System.out.println(i.getDivisionName() + " " + i.getCountryID());
-        switch(i.getCountryID()){
+
+        int countryID = selectedCustomer.getCustomerDivision().getCountryID();
+        switch(countryID){
             case 1:
+                countryComboBox.setValue("U.S");
+                stateComboBox.setValue(selectedCustomer.getCustomerDivision().getDivisionName());
+               onSetCountry();
                 break;
             case 2:
+                countryComboBox.setValue("UK");
+                onSetCountry();
+                stateComboBox.setValue(selectedCustomer.getCustomerDivision().getDivisionName());
                 break;
             case 3:
+                countryComboBox.setValue("Canada");
+                onSetCountry();
+                stateComboBox.setValue(selectedCustomer.getCustomerDivision().getDivisionName());
                 break;
         }
-        }});
+        }
 
-    }
+
 
     private void SetCountry(String country) {
         switch (country){

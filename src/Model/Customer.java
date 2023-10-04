@@ -18,12 +18,13 @@ public class Customer {
     private Date lastUpdate;
     private String lastUpdateBy;
     private int division;
+    private Divisions customerDivision;
 
-    public Customer(int customerId, String customerName,
+    public  Customer(int customerId, String customerName,
                     String address, String postalCode,
                     String phoneNumber, Date createDate,
                     String createdBy, Date lastUpdate,
-                    String lastUpdateBy, int divisionID) {
+                    String lastUpdateBy, int divisionID, Divisions divisions) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
@@ -34,6 +35,7 @@ public class Customer {
         this.lastUpdate = lastUpdate;
         this.lastUpdateBy = lastUpdateBy;
         this.division = divisionID;
+        this.customerDivision = divisions;
     }
 
 
@@ -67,13 +69,18 @@ public class Customer {
         return lastUpdateBy;
     }
 
-    public Customer(int customerId, String customerName, String address, String postalCode, String phoneNumber, int divisionID) {
+    public Divisions getCustomerDivision() {
+        return customerDivision;
+    }
+
+    public Customer(int customerId, String customerName, String address, String postalCode, String phoneNumber, int divisionID, Divisions divisions) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
         this.phoneNumber = phoneNumber;
         this.division = divisionID;
+        this.customerDivision = divisions;
     }
 
     public int getDivision() {
