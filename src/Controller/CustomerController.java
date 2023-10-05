@@ -82,6 +82,7 @@ public class CustomerController implements Initializable {
     }
     public void onClickDeleteButton(ActionEvent actionEvent) throws IOException, SQLException {
     Customer toDelete = (Customer) customerTable.getSelectionModel().getSelectedItem();
+        Alerter.displayAlert("Delete Succesful","Deletion Succesful ",toDelete.getCustomerName() + " has been succesfully deleted.");
     CustomerAccess.deleteCustomer(toDelete);
     refreshCustomersList();
 

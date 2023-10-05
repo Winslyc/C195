@@ -1,5 +1,6 @@
 package DAO;
 
+import Helper.Alerter;
 import Helper.JDBC;
 import Model.Customer;
 import Model.Divisions;
@@ -55,6 +56,7 @@ public abstract class CustomerAccess {
         ps.setInt(1, newCustomer.getCustomerId());
         ps.executeUpdate();
 
+
     }
     public static void addcustomer(Customer newCustomer) throws SQLException {
         String sql = "INSERT INTO customers(Customer_ID, Customer_name, Address, Postal_Code, Phone" + "" +
@@ -80,7 +82,7 @@ public abstract class CustomerAccess {
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, id);
         ps.setString(2, updatedCustomer.getCustomerName());
-        ps.setString(3, updatedCustomer.getAddress());
+         ps.setString(3, updatedCustomer.getAddress());
         ps.setString(4,updatedCustomer.getPostalCode());
         ps.setString(5,updatedCustomer.getPhoneNumber());
         ps.setTimestamp(6, Timestamp.valueOf(LocalDateTime.now()));

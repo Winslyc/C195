@@ -29,4 +29,10 @@ public abstract class Alerter {
         return  false;
     }
 
+    public static void displayAlert(String title,String message, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
 }
