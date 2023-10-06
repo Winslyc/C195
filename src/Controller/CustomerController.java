@@ -60,6 +60,7 @@ public class CustomerController implements Initializable {
            Scene scene = new Scene(parent);
            Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
            stage.setScene(scene);
+           stage.setResizable(false);
            stage.show();
 
        }else{
@@ -67,6 +68,11 @@ public class CustomerController implements Initializable {
        }
 
     }
+
+    /**
+     * Refreshes  List of customers in the TableView.
+     * @throws SQLException
+     */
     public void refreshCustomersList() throws SQLException {
         Customer.customers.setAll(CustomerAccess.selectAllCustomers());
         customerTable.setItems(Customer.customers);
