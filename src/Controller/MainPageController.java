@@ -30,6 +30,15 @@ public class MainPageController implements Initializable {
         stage.show();
 
     }
+
+    public void onSubmitSchedule(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
