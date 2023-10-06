@@ -36,10 +36,21 @@ public class UserAccess {
        ResultSet rs = ps.executeQuery();
        if(rs.next()){
 
-          currentUser = new User(rs.getString("User_Name"), ZoneId.systemDefault());
+          currentUser = new User(rs.getString("User_Name"), ZoneId.systemDefault(), rs.getInt("User_ID"));
            return true;
        }
        return false;
+    }
+    public static int getUserID(String username) throws SQLException {
+    String sql = "SELECT * FROM USERS WHERE User_Name = ?";
+    PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+    ps.setString(1, username);
+    ResultSet rs = ps.executeQuery();
+    int UserID = 0;
+    while(rs.next()){
+       UserID = rs.getInt("User_ID");
+    }
+    return UserID;
     }
 
 }

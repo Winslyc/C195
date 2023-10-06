@@ -22,11 +22,9 @@ public class Main extends Application {
         ResourceBundle rb = ResourceBundle.getBundle("Language/NAT", Locale.getDefault());
         if(Locale.getDefault().getLanguage().equals("fr") ||
                 Locale.getDefault().getLanguage().equals("en")){
-            System.out.println(rb.getString("Hello"));
         }
-        System.out.println(obj.getDisplayName());
 
-        System.out.println(ZoneId.systemDefault());
+
         launch(args);
         JDBC.closeConnection();
    }

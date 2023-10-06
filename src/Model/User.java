@@ -10,6 +10,7 @@ public class User {
 
     private String Username;
     private ZoneId userZoneID;
+    private int userID;
     public User() {
 
     }
@@ -29,7 +30,7 @@ public class User {
         Username = username;
     }
 
-    public User(String username, ZoneId userZoneID) {
+    public User(String username, ZoneId userZoneID,int Id) {
         Username = username;
         this.userZoneID = userZoneID;
     }
@@ -40,6 +41,10 @@ public class User {
 
     public void setUserZoneID(ZoneId userZoneID) {
         this.userZoneID = userZoneID;
+    }
+
+    public int getUserId() {
+        return userID;
     }
 }
 

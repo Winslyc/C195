@@ -76,7 +76,7 @@ public class LoginPageController implements Initializable {
             ResourceBundle rb = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
 
             if(UserAccess.login(UsernameField.getText(), PasswordField.getText())){
-                User currentUser = new User(UsernameField.getText(), ZoneId.systemDefault());
+               UserAccess.currentUser = new User(UsernameField.getText(), ZoneId.systemDefault(), UserAccess.getUserID(UsernameField.getText()));
                 ActivityLogger.logActivity(UsernameField.getText(), true);
                 Parent parent = FXMLLoader.load(getClass().getResource("/View/MainPage.fxml"));
                 Scene scene = new Scene(parent);
