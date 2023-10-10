@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -43,9 +44,17 @@ public class NewAppointmentController implements Initializable {
     @FXML private ComboBox endTime;
     private int currentID;
 
-    public void onSubmitAdd(){
-        
-
+    public void onSubmitAdd() throws SQLException {
+        int id = Integer.parseInt(appointmentID.getText());
+        String title = appointmentTitle.getText();
+        String description = descriptionTextField.getText();
+        String location = locationTextField.getText();
+        String type = typeTextField.getText();
+        int user = Integer.parseInt(userID.getText());
+        int customer = Integer.parseInt(customerId.getText());
+        String selectedContact = String.valueOf(contactComboBox.getSelectionModel().getSelectedItem());
+        int contactID = ContactAccess.getContactID(selectedContact);
+        LocalDate Startdate = StartDate.getValue();
     }
     public void onClickCancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
@@ -76,7 +85,7 @@ public class NewAppointmentController implements Initializable {
 
     private void setComboBox() {
         //SETS CONTACT NAMES List
-        ObservableList contactNames = FXCollections.observableArrayList();
+        ObservableList<String> contactNames = FXCollections.observableArrayList();
         ContactAccess.getAllContacts().forEach((i)->{
            contactNames.add( i.getContact_Name());
         });
@@ -91,6 +100,7 @@ public class NewAppointmentController implements Initializable {
         if(!firstAppointment.equals(0) || !lastAppointment.equals(0)){
             while(firstAppointment.isBefore(lastAppointment)){
                 appointmentTimes.add(String.valueOf(firstAppointment));
+
                 firstAppointment =firstAppointment.plusMinutes(15);
 
             }

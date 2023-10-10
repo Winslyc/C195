@@ -34,4 +34,5 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         }
     return allAppointments;
     }
+
 }

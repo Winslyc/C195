@@ -31,5 +31,11 @@ public abstract class ContactAccess {
     }
 
 
+    public static int getContactID(String contact) throws SQLException {
+        String sql = "SELECT * FROM CONTACTS WHERE Contact_Name = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        return rs.getInt("Contact_ID");
     }
+}
 
