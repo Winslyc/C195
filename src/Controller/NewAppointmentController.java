@@ -14,7 +14,10 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 
@@ -67,6 +70,23 @@ public class NewAppointmentController implements Initializable {
            contactNames.add( i.getContact_Name());
         });
         contactComboBox.setItems(contactNames);
+        // SETS TIME COMBO BOXES /// Business hours == 8AM to 10PM EST
+        ObservableList<String> appointmentTimes = FXCollections.observableArrayList();
+
+
+        LocalTime firstAppointment = LocalTime.MIN.plusHours(8);
+        LocalTime lastAppointment = LocalTime.MAX.minusHours(1).minusMinutes(45);
+
+        if(!firstAppointment.equals(0) || !lastAppointment.equals(0)){
+            while(firstAppointment.isBefore(lastAppointment)){
+                appointmentTimes.add(String.valueOf(firstAppointment));
+                firstAppointment =firstAppointment.plusMinutes(15);
+
+            }
+        }
+        startTime.setItems(appointmentTimes);
+        endTime.setItems(appointmentTimes);
+
 
     }
 }

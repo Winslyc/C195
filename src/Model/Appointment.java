@@ -70,4 +70,5 @@ public class Appointment {
     public int getContactID() {
         return contactID;
     }
+
 }
