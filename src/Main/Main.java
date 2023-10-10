@@ -23,8 +23,6 @@ public class Main extends Application {
         if(Locale.getDefault().getLanguage().equals("fr") ||
                 Locale.getDefault().getLanguage().equals("en")){
         }
-
-
         launch(args);
         JDBC.closeConnection();
    }

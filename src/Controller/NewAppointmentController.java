@@ -1,8 +1,11 @@
 package Controller;
 
 import DAO.AppointmentsAccess;
+import DAO.ContactAccess;
 import DAO.UserAccess;
 import Model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -11,6 +14,7 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
@@ -48,7 +52,7 @@ public class NewAppointmentController implements Initializable {
     private void setAppointmentID() {
         try {
 
-            currentID =AppointmentsAccess.getAllAppointments().size()+2;
+            currentID =AppointmentsAccess.getAllAppointments().size()+1;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -57,6 +61,12 @@ public class NewAppointmentController implements Initializable {
     }
 
     private void setComboBox() {
+        //SETS CONTACT NAMES List
+        ObservableList contactNames = FXCollections.observableArrayList();
+        ContactAccess.getAllContacts().forEach((i)->{
+           contactNames.add( i.getContact_Name());
+        });
+        contactComboBox.setItems(contactNames);
 
     }
 }
