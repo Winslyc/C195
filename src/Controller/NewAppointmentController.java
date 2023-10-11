@@ -3,6 +3,7 @@ package Controller;
 import DAO.AppointmentsAccess;
 import DAO.ContactAccess;
 import DAO.UserAccess;
+import Helper.TimeUtil;
 import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -54,7 +56,12 @@ public class NewAppointmentController implements Initializable {
         int customer = Integer.parseInt(customerId.getText());
         String selectedContact = String.valueOf(contactComboBox.getSelectionModel().getSelectedItem());
         int contactID = ContactAccess.getContactID(selectedContact);
-        LocalDate Startdate = StartDate.getValue();
+       /* LocalDate Startdate = StartDate.getValue();
+        String TimeStart = startTime.getSelectionModel().getSelectedItem().toString();
+        LocalTime TimeStarted = TimeUtil.stringtToTime(TimeStart);
+        LocalDateTime startDateTime = StartDate.getValue().atTime(TimeStarted);
+*/
+
     }
     public void onClickCancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
