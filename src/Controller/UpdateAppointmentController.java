@@ -26,6 +26,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+import static DAO.ContactAccess.getContactName;
+
 
 public class UpdateAppointmentController implements Initializable {
     @FXML private TextField appointmentID;
@@ -40,9 +42,10 @@ public class UpdateAppointmentController implements Initializable {
     @FXML private DatePicker endDate;
     @FXML private ComboBox startTime;
     @FXML private ComboBox endTime;
+    public  static Appointment selectedAppointment;
     private int currentID;
 //TODO add error handling functionality
-    public void onSubmitAdd(ActionEvent actionEvent) throws SQLException, IOException {
+    public void onSubmitUpdate(ActionEvent actionEvent) throws SQLException, IOException {
         int id = Integer.parseInt(appointmentID.getText());
         String title = appointmentTitle.getText();
         String description = descriptionTextField.getText();
@@ -55,7 +58,7 @@ public class UpdateAppointmentController implements Initializable {
         LocalDateTime startDateTime = convertToDateTime(startDate.getValue(), startTime.getSelectionModel().getSelectedItem().toString());
         LocalDateTime endDateTime= convertToDateTime(endDate.getValue(), endTime.getSelectionModel().getSelectedItem().toString());
         Appointment newAppointment = new Appointment(id, title, description, location, type, startDateTime,endDateTime,customer,user,contactID);
-        AppointmentsAccess.addNewAppointment(newAppointment);
+        AppointmentsAccess.updateAppointment(newAppointment);
         Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
         Scene scene = new Scene(parent);
         Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
@@ -75,23 +78,36 @@ public class UpdateAppointmentController implements Initializable {
         Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        setAppointmentID();
         setComboBox();
+        try {
+            appointmentTitle.setText(selectedAppointment.getTitle());
+            descriptionTextField.setText(selectedAppointment.getDescription());
+            locationTextField.setText(selectedAppointment.getLocation());
+            contactComboBox.setValue(getContactName(selectedAppointment.getContactID()));
+            typeTextField.setText(selectedAppointment.getType());
+            startDate.setValue(selectedAppointment.getStartDateandTime().toLocalDate());
+            startTime.setValue(selectedAppointment.getStartDateandTime().toLocalTime().toString());
+            endDate.setValue(selectedAppointment.getEndDateandTime().toLocalDate());
+            endTime.setValue(selectedAppointment.getEndDateandTime().toLocalTime());
+            userID.setText(String.valueOf(selectedAppointment.getUserID()));
+            customerId.setText(String.valueOf(selectedAppointment.getCustomerID()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 // Auto Increments appointmentID's
     private void setAppointmentID() {
-        try {
+            currentID =selectedAppointment.getAppointmentId();
 
-            currentID =AppointmentsAccess.getAllAppointments().size()+1;
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         appointmentID.setText(String.valueOf(currentID));
     }
 
@@ -123,6 +139,4 @@ public class UpdateAppointmentController implements Initializable {
 
     }
 
-    public void onSubmitUpdate(ActionEvent actionEvent) {
-    }
 }

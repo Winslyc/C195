@@ -59,4 +59,27 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         ps.executeUpdate();
 
     }
+
+    public static void updateAppointment(Appointment newAppointment) throws SQLException {
+        String sql = "UPDATE Appointments" +
+                " SET Appointment_ID = ?, Title = ?, Description = ?, " +
+                "Location = ?, Type = ?, Start = ?, End = ?, Last_Update = ?, " +
+                "Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ?" +
+                " WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, newAppointment.getAppointmentId());
+        ps.setString(2, newAppointment.getTitle());
+        ps.setString(3,newAppointment.getDescription());
+        ps.setString(4, newAppointment.getLocation());
+        ps.setString(5, newAppointment.getType());
+        ps.setTimestamp(6,Timestamp.valueOf(newAppointment.getStartDateandTime()));
+        ps.setTimestamp(7,Timestamp.valueOf(newAppointment.getEndDateandTime()));
+        ps.setTimestamp(8,Timestamp.valueOf(LocalDateTime.now()));
+        ps.setString(9, UserAccess.getCurrentUser().getUsername());
+        ps.setInt(10, newAppointment.getCustomerID());
+        ps.setInt(11,newAppointment.getUserID());
+        ps.setInt(12,newAppointment.getContactID());
+        ps.setInt(13, newAppointment.getAppointmentId());
+        ps.executeUpdate();
+    }
 }

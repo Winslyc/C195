@@ -42,5 +42,18 @@ public abstract class ContactAccess {
         }
         return contact_id;
     }
+
+    public static String getContactName(int contactID) throws SQLException {
+
+        String sql = "SELECT * FROM CONTACTS WHERE Contact_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, contactID);
+        ResultSet rs = ps.executeQuery();
+       String contact_Name = "";
+        while(rs.next()){
+            contact_Name = rs.getString("Contact_Name");
+        }
+        return contact_Name;
+    }
 }
 

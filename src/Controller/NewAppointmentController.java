@@ -2,7 +2,6 @@ package Controller;
 
 import DAO.AppointmentsAccess;
 import DAO.ContactAccess;
-import DAO.UserAccess;
 import Helper.TimeUtil;
 import Model.Appointment;
 import javafx.collections.FXCollections;

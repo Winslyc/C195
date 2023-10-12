@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.AppointmentsAccess;
+import Helper.Alerter;
 import Model.Appointment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,12 +34,26 @@ public class AppointmentsController implements Initializable {
   @FXML TableColumn customerID;
   @FXML TableColumn userID;
 
+
   public void onSubmitNew(ActionEvent actionEvent) throws IOException {
     Parent parent = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
     Scene scene = new Scene(parent);
     Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
+  }
+  public void onSubmitEdit(ActionEvent actionEvent) throws  IOException{
+    UpdateAppointmentController.selectedAppointment = (Appointment) appointmentsTable.getSelectionModel().getSelectedItem();
+    if(UpdateAppointmentController.selectedAppointment != null) {
+      Parent parent = FXMLLoader.load(getClass().getResource("/View/UpdateAppointment.fxml"));
+      Scene scene = new Scene(parent);
+      Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+      stage.setScene(scene);
+      stage.show();
+    }
+    else {
+      Alerter.displayErrorAlert("Appointment not selected", "There is no selectedAppointment selected.");
+    }
   }
  public void onSubmitBack(ActionEvent actionEvent) throws IOException {
    Parent parent = FXMLLoader.load(getClass().getResource("/View/MainPage.fxml"));
