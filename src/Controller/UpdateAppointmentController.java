@@ -2,7 +2,6 @@ package Controller;
 
 import DAO.AppointmentsAccess;
 import DAO.ContactAccess;
-import DAO.UserAccess;
 import Helper.TimeUtil;
 import Model.Appointment;
 import javafx.collections.FXCollections;
@@ -28,7 +27,7 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 
-public class NewAppointmentController implements Initializable {
+public class UpdateAppointmentController implements Initializable {
     @FXML private TextField appointmentID;
     @FXML private TextField appointmentTitle;
     @FXML private TextField descriptionTextField;
@@ -122,5 +121,8 @@ public class NewAppointmentController implements Initializable {
         endTime.setItems(appointmentTimes);
 
 
+    }
+
+    public void onSubmitUpdate(ActionEvent actionEvent) {
     }
 }

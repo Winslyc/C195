@@ -1,15 +1,16 @@
 package DAO;
 
 import Helper.JDBC;
+import Helper.TimeUtil;
 import Model.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.converter.LocalDateTimeStringConverter;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 public abstract class AppointmentsAccess {
 
@@ -35,4 +36,27 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
     return allAppointments;
     }
 
+    public static void addNewAppointment(Appointment newAppointment) throws SQLException {
+        String sql = "INSERT INTO Appointments(Appointment_ID, Title, " +
+                "Description, Location, Type, Start, End, Create_Date, Created_By," +
+                " Last_Update, Last_Updated_By,Customer_ID, User_ID, Contact_ID) " +
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1,newAppointment.getAppointmentId());
+        ps.setString(2, newAppointment.getTitle());
+        ps.setString(3,newAppointment.getDescription());
+        ps.setString(4, newAppointment.getLocation());
+        ps.setString(5, newAppointment.getType());
+        ps.setTimestamp(6, Timestamp.valueOf(newAppointment.getStartDateandTime()));
+        ps.setTimestamp(7, Timestamp.valueOf(newAppointment.getEndDateandTime()));
+        ps.setTimestamp(8,Timestamp.valueOf(LocalDateTime.now()));
+        ps.setString(9, UserAccess.getCurrentUser().getUsername());
+        ps.setTimestamp(10, Timestamp.valueOf(LocalDateTime.now()));
+        ps.setString(11, UserAccess.currentUser.getUsername());
+        ps.setInt(12,newAppointment.getCustomerID());
+        ps.setInt(13, newAppointment.getUserID());
+        ps.setInt(14,newAppointment.getContactID());
+        ps.executeUpdate();
+
+    }
 }
