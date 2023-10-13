@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -33,6 +34,8 @@ public class AppointmentsController implements Initializable {
   @FXML TableColumn endDateandTime;
   @FXML TableColumn customerID;
   @FXML TableColumn userID;
+  @FXML RadioButton monthRadioButton;
+  @FXML RadioButton weekRadioButton;
 
 
   public void onSubmitNew(ActionEvent actionEvent) throws IOException {
@@ -41,6 +44,25 @@ public class AppointmentsController implements Initializable {
     Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
+  }
+  public void onSubmitDelete(ActionEvent actionEvent) throws SQLException {
+    Appointment selectedAppointment = (Appointment) appointmentsTable.getSelectionModel().getSelectedItem();
+    if(AppointmentsAccess.deleteAppointment(selectedAppointment)){
+      Alerter.displayAlert("Deletion Succesful", "You have deleted Appointment " + String.valueOf(selectedAppointment.getAppointmentId()) + " This was an " +
+              selectedAppointment.getType() + " type of appointment. " , "Thank You.");
+      appointmentsTable.setItems(AppointmentsAccess.getAllAppointments());
+    }
+    else{
+      Alerter.displayErrorAlert("Delete Unsuccessful", "Please try again your deletion of Appointment " + selectedAppointment.getAppointmentId() + " was unsuccesful.");
+    }
+
+
+  }
+  public void resetFilters(ActionEvent actionEvent){
+
+  }
+  public void onSelectRadioButton(ActionEvent actionEvent){
+
   }
   public void onSubmitEdit(ActionEvent actionEvent) throws  IOException{
     UpdateAppointmentController.selectedAppointment = (Appointment) appointmentsTable.getSelectionModel().getSelectedItem();
@@ -64,7 +86,7 @@ public class AppointmentsController implements Initializable {
  }
 
   /**
-   * Initializes the Table View of all Apoointments.
+   * Initializes the Table View of all Appointments.
    * @param url
    * @param resourceBundle
    */

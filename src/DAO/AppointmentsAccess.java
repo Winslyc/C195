@@ -1,16 +1,12 @@
 package DAO;
 
 import Helper.JDBC;
-import Helper.TimeUtil;
 import Model.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.util.converter.LocalDateTimeStringConverter;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 public abstract class AppointmentsAccess {
 
@@ -81,5 +77,18 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         ps.setInt(12,newAppointment.getContactID());
         ps.setInt(13, newAppointment.getAppointmentId());
         ps.executeUpdate();
+    }
+    public static boolean deleteAppointment(Appointment newAppointment)  {
+        try {
+            String sql = "DELETE FROM Appointments WHERE(Appointment_ID = ?)";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, newAppointment.getAppointmentId());
+            ps.executeUpdate();
+        } catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return  true;
     }
 }

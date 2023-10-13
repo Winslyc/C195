@@ -32,6 +32,7 @@ public abstract class Alerter {
     public static void displayAlert(String title,String message, String contentText) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
+        alert.setHeaderText(message);
         alert.setContentText(contentText);
         alert.showAndWait();
     }
