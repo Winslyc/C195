@@ -23,17 +23,28 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
-  @FXML TableView appointmentsTable;
-  @FXML TableColumn appointmentID;
-  @FXML TableColumn title;
-  @FXML TableColumn description;
-  @FXML TableColumn location;
-  @FXML TableColumn contact;
-  @FXML TableColumn type;
-  @FXML TableColumn startDateandTime;
-  @FXML TableColumn endDateandTime;
-  @FXML TableColumn customerID;
-  @FXML TableColumn userID;
+  @FXML
+  TableView<Appointment> appointmentsTable;
+  @FXML
+  TableColumn<Appointment, Integer> appointmentID;
+  @FXML
+  TableColumn<Appointment, String> title;
+  @FXML
+  TableColumn<Appointment, String> description;
+  @FXML
+  TableColumn<Appointment, String> location;
+  @FXML
+  TableColumn<Appointment, String> contact;
+  @FXML
+  TableColumn<Appointment, String> type;
+  @FXML
+  TableColumn<Appointment, LocalDateTime> startDateandTime;
+  @FXML
+  TableColumn<Appointment, LocalDateTime> endDateandTime;
+  @FXML
+  TableColumn<Appointment, Integer> customerID;
+  @FXML
+  TableColumn<Appointment, Integer> userID;
   @FXML RadioButton monthRadioButton;
   @FXML RadioButton weekRadioButton;
 
@@ -46,7 +57,7 @@ public class AppointmentsController implements Initializable {
     stage.show();
   }
   public void onSubmitDelete(ActionEvent actionEvent) throws SQLException {
-    Appointment selectedAppointment = (Appointment) appointmentsTable.getSelectionModel().getSelectedItem();
+    Appointment selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
     if(AppointmentsAccess.deleteAppointment(selectedAppointment)){
       Alerter.displayAlert("Deletion Succesful", "You have deleted Appointment " + String.valueOf(selectedAppointment.getAppointmentId()) + " This was an " +
               selectedAppointment.getType() + " type of appointment. " , "Thank You.");
@@ -61,11 +72,15 @@ public class AppointmentsController implements Initializable {
   public void resetFilters(ActionEvent actionEvent){
 
   }
-  public void onSelectRadioButton(ActionEvent actionEvent){
+  public void onSelectRadioButton(ActionEvent actionEvent) throws SQLException {
 
+    appointmentsTable.setItems(AppointmentsAccess.getAppointmentsByMonth());
+
+    if(monthRadioButton.isSelected()){
+  }
   }
   public void onSubmitEdit(ActionEvent actionEvent) throws  IOException{
-    UpdateAppointmentController.selectedAppointment = (Appointment) appointmentsTable.getSelectionModel().getSelectedItem();
+    UpdateAppointmentController.selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
     if(UpdateAppointmentController.selectedAppointment != null) {
       Parent parent = FXMLLoader.load(getClass().getResource("/View/UpdateAppointment.fxml"));
       Scene scene = new Scene(parent);
