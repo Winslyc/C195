@@ -4,8 +4,10 @@ import Helper.JDBC;
 import Model.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public abstract class AppointmentsAccess {
@@ -91,25 +93,26 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
 
         return  true;
     }
-    public static ObservableList<Appointment> getAppointmentsByMonth() throws SQLException {
-    String sql = "SELECT * FROM  appointments INNER JOIN contact ON appointments.Contact_ID = contacts.Contact_ID WHERE MONTH(START) = MONTH(NOW) ORDER BY Appointment_ID";
-    ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
-    PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-    ResultSet rs = ps.executeQuery();
-    while(rs.next()){
-        int appointmentID= rs.getInt("Appointment_ID");
-        String title = rs.getString("Title");
-        String description = rs.getString("Description");
-        String location = rs.getString("Location");
-        String type = rs.getString("Type");
-        LocalDateTime startDateTime =rs.getTimestamp("Start").toLocalDateTime();
-        LocalDateTime endDateTime =rs.getTimestamp("End").toLocalDateTime();
-        int customerID =rs.getInt("Contact_ID");
-        int userID= rs.getInt("User_ID");
-        int contactID = rs.getInt("Contact_ID");
-    monthlyAppointments.add(new Appointment(appointmentID,title,description,location,type, startDateTime,endDateTime,
-                customerID,userID,contactID));
+    public static FilteredList<Appointment> getAppointmentsByMonth(LocalDateTime loginDateTime) throws SQLException {
+        ObservableList<Appointment> weekAppt = FXCollections.observableArrayList();
+        weekAppt =getAllAppointments();
+        FilteredList<Appointment> filteredWeekAppts = new FilteredList<>(weekAppt);
+        filteredWeekAppts.setPredicate(appointment -> {
+            LocalDateTime apptDate = appointment.getStartDateandTime();
+            return((apptDate.isEqual(loginDateTime) || apptDate.isAfter(loginDateTime) && apptDate.isBefore(loginDateTime.plusDays(30))));
+        });
+        return filteredWeekAppts;
+
     }
-    return monthlyAppointments;
+
+    public static FilteredList<Appointment>  getAppointmentsByWeek(LocalDateTime loginDateTime) throws SQLException {
+        ObservableList<Appointment> weekAppt = FXCollections.observableArrayList();
+        weekAppt =getAllAppointments();
+        FilteredList<Appointment> filteredWeekAppts = new FilteredList<>(weekAppt);
+        filteredWeekAppts.setPredicate(appointment -> {
+            LocalDateTime apptDate = appointment.getStartDateandTime();
+            return((apptDate.isEqual(loginDateTime) || apptDate.isAfter(loginDateTime) && apptDate.isBefore(loginDateTime.plusDays(30))));
+        });
+        return filteredWeekAppts;
     }
 }

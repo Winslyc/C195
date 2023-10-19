@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.ReportsController"
-            prefHeight="400.0" prefWidth="600.0" >
 
+<AnchorPane prefHeight="183.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportsController">
+   <children>
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="124.0" prefWidth="143.0" style="-fx-background-color: #32ddaa;" AnchorPane.topAnchor="14.0">
+         <children>
+            <Text layoutX="14.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contacts By Month and Type" wrappingWidth="115.63671875" />
+         </children>
+      </Pane>
+      <Pane layoutX="179.0" layoutY="14.0" prefHeight="124.0" prefWidth="143.0" style="-fx-background-color: #32ddaa;">
+         <children>
+            <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Company Contact Schedules" wrappingWidth="115.63671875" />
+         </children>
+      </Pane>
+      <Pane layoutX="343.0" layoutY="14.0" prefHeight="124.0" prefWidth="143.0" style="-fx-background-color: #32ddaa;">
+         <children>
+            <Text layoutX="14.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customers By Country" wrappingWidth="115.63671875" />
+         </children>
+      </Pane>
+      <Button fx:id="exitButton" layoutX="428.0" layoutY="151.0" minWidth="43.0" mnemonicParsing="false" prefHeight="25.0" text="Exit" />
+   </children>
 </AnchorPane>
