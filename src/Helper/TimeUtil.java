@@ -12,6 +12,13 @@ public class TimeUtil {
   LocalTime newLocalTime = LocalTime.parse(time, dateTimeFormatter);
   return newLocalTime;
  }
+    public static ZonedDateTime convertLocalToUTC(LocalDateTime localDateTime){
+     ZonedDateTime localZonedDateTime=localDateTime.atZone(ZoneId.systemDefault());
+     return localZonedDateTime.withZoneSameInstant(ZoneId.of("UTC"));
+    }
+    public static ZonedDateTime convertUTCtoLocal(ZonedDateTime utcTime){
+     return utcTime.withZoneSameInstant(ZoneId.systemDefault());
+    }
 
     public static String dateTimetoTimestampUTC(LocalDateTime dateTime) {{
             Timestamp currentTimeStamp = Timestamp.valueOf(String.valueOf(dateTime));
@@ -22,4 +29,5 @@ public class TimeUtil {
             String utcOUT = localOUT.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             return utcOUT;
         }   }
+
 }
