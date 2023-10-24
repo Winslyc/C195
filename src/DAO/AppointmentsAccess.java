@@ -1,6 +1,7 @@
 package DAO;
 
 import Helper.JDBC;
+import Helper.TimeUtil;
 import Model.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +24,7 @@ public abstract class AppointmentsAccess {
             String description = rs.getString("Description");
             String location = rs.getString("Location");
             String type = rs.getString("Type");
-            LocalDateTime startDateTime =rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime startDateTime = rs.getTimestamp("Start").toLocalDateTime();
             LocalDateTime endDateTime =rs.getTimestamp("End").toLocalDateTime();
             int customerID =rs.getInt("Contact_ID");
             int userID= rs.getInt("User_ID");

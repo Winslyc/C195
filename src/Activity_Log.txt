@@ -202,3 +202,9 @@
 2023-10-15 | 23:14:44.538761800 | User: Admin | Login Succesful
 2023-10-15 | 23:15:38.358808500 | User: Admin | Login Succesful
 2023-10-16 | 15:30:24.283655900 | User: Admin | Login Succesful
+2023-10-24 | 16:13:51.935837700 | User: Admin | Login Succesful
+2023-10-24 | 16:22:21.069942600 | User: Admin | Login Succesful
+2023-10-24 | 16:24:36.699697400 | User: Admin  | Login Failed
+2023-10-24 | 16:24:42.075728700 | User: Admin | Login Succesful
+2023-10-24 | 16:28:43.406025600 | User: Admin | Login Succesful
+2023-10-24 | 16:30:19.090551800 | User: Admin | Login Succesful

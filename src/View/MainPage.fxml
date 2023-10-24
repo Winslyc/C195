@@ -16,5 +16,10 @@
             <Font size="30.0" />
          </font>
       </Button>
+      <Button fx:id="Reports" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#onSubmitReports" prefHeight="164.0" prefWidth="188.0" style="-fx-border-color: transparent; -fx-background-color: #5afcd2;" text="Reports" textOverrun="CLIP">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
