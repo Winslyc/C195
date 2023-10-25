@@ -1,5 +1,7 @@
 package Model;
 
+import DAO.AppointmentsAccess;
+
 import java.time.LocalDateTime;
 
 public class Appointment {
@@ -29,6 +31,10 @@ public class Appointment {
         this.customerID = customerID;
         this.userID = userID;
         this.contactID = contactID;
+    }
+    public Appointment(LocalDateTime start, String type){
+        this.type= type;
+        this.startDateandTime=start;
     }
 
     public int getAppointmentId() {

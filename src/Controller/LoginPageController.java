@@ -1,10 +1,14 @@
 package Controller;
 
 
+import DAO.AppointmentsAccess;
 import DAO.UserAccess;
 import Helper.ActivityLogger;
 import Helper.Alerter;
+import Model.Appointment;
 import Model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +25,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -30,6 +35,7 @@ public class LoginPageController implements Initializable {
      * The Login Button
      *
      */
+    private ObservableList<Appointment> upcomingAppointment = FXCollections.observableArrayList();
     @FXML
     Button LoginButton;
     /**
@@ -83,7 +89,21 @@ public class LoginPageController implements Initializable {
                 Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
-            System.out.println("Pass");
+                AppointmentsAccess.getAllAppointments().forEach(i-> {
+                            if(i.getStartDateandTime().isBefore(LocalDateTime.now().plusMinutes(16))&& i.getStartDateandTime().isAfter(LocalDateTime.now())){
+                                upcomingAppointment.add(i);
+                            }
+
+                        }
+                );
+                if(upcomingAppointment.isEmpty()){
+                    Alerter.displayAlert("Upcoming Appointments", "There are no upcoming appointments", "There are no appointments in the next 15 minutes");
+                }else{
+                    upcomingAppointment.forEach(i->{
+                        Alerter.displayAlert("Upcoming Appointment", "You have an upcoming appointment at " + i.getStartDateandTime().toString(), "Please be on time.");
+                    });
+                }
+
             }
             else{
                 Alerter.displayErrorAlert(rb.getString("Invalid Username and Password Combination"), rb.getString("Your username or password is incorrect, please try again."));

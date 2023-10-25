@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable {
@@ -21,7 +22,7 @@ public class MainPageController implements Initializable {
     Button customerTab;
 
     public void onSubmitCustomers(ActionEvent actionEvent)  throws IOException{
-        Parent parent = FXMLLoader.load(getClass().getResource("/View/Customer.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/Customer.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -30,7 +31,7 @@ public class MainPageController implements Initializable {
     }
 
     public void onSubmitSchedule(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/Appointments.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -38,7 +39,7 @@ public class MainPageController implements Initializable {
 
     }
     public void onSubmitReports(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/View/reports.fxml"));
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Reports.fxml")));
         Scene scene = new Scene(parent);
         Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);

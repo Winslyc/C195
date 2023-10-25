@@ -74,6 +74,7 @@ appointmentsTable.setItems(AppointmentsAccess.getAllAppointments());
 monthRadioButton.setSelected(false);
 weekRadioButton.setSelected(false);
   }
+  //TODO Fix the Radiobuttons, so that filter by week can be selected after filter by month.
   public void onSelectRadioButton(ActionEvent actionEvent) throws SQLException {
     if(monthRadioButton.isSelected()){
       weekRadioButton.setSelected(false);
@@ -81,7 +82,8 @@ weekRadioButton.setSelected(false);
       if(AppointmentsAccess.getAppointmentsByMonth(LocalDateTime.now().toLocalDate().atStartOfDay()).isEmpty()){
         Alerter.displayAlert("No Appointments", "There are no appointments scheduled in the next 30 days", "If you would like to schedule an appointment please proceed and click add to schedule");
       }
-    } else if(weekRadioButton.isSelected()){
+    }
+    if(weekRadioButton.isSelected()){
       monthRadioButton.setSelected(false);
       appointmentsTable.setItems(AppointmentsAccess.getAppointmentsByWeek(LocalDateTime.now().toLocalDate().atStartOfDay()));
       if(AppointmentsAccess.getAppointmentsByWeek(LocalDateTime.now().toLocalDate().atStartOfDay()).isEmpty()){

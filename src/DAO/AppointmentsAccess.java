@@ -1,14 +1,12 @@
 package DAO;
 
 import Helper.JDBC;
-import Helper.TimeUtil;
 import Model.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public abstract class AppointmentsAccess {
@@ -115,5 +113,16 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
             return((apptDate.isEqual(loginDateTime) || apptDate.isAfter(loginDateTime) && apptDate.isBefore(loginDateTime.plusDays(30))));
         });
         return filteredWeekAppts;
+    }
+
+
+    public static ObservableList getAppointmentsByContact(int contactID) throws SQLException {
+        ObservableList list = FXCollections.observableArrayList();
+        getAllAppointments().forEach(i-> {
+            if(i.getContactID()==contactID){
+                list.add(i);
+            }
+        });
+        return list;
     }
 }
