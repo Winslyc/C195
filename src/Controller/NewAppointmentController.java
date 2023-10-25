@@ -28,20 +28,42 @@ import java.util.ResourceBundle;
 
 
 public class NewAppointmentController implements Initializable {
+ /** Appointment ID input field. */
     @FXML private TextField appointmentID;
+    /** Appointment title input field. */
     @FXML private TextField appointmentTitle;
+    /** Description input field. */
     @FXML private TextField descriptionTextField;
+    /** Location input field. */
     @FXML private TextField locationTextField;
+    /** Type input field. */
     @FXML private TextField typeTextField;
+    /** User ID input field. */
     @FXML private TextField userID;
+    /** Customer ID input field. */
     @FXML private TextField customerId;
+    /** Contact selection combo box. */
     @FXML private ComboBox contactComboBox;
+    /** Start date picker. */
     @FXML private DatePicker startDate;
+    /** End date picker. */
     @FXML private DatePicker endDate;
+    /** Start time selection combo box. */
     @FXML private ComboBox startTime;
+    /** End time selection combo box. */
     @FXML private ComboBox endTime;
+    /**
+     * Grabs the currently Selected Appointment ID to edit.
+     */
     private int currentID;
 //TODO add error handling functionality
+
+    /**
+     * Adds Customer to the Database
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void onSubmitAdd(ActionEvent actionEvent) throws SQLException, IOException {
         int id = Integer.parseInt(appointmentID.getText());
         String title = appointmentTitle.getText();
@@ -63,12 +85,22 @@ public class NewAppointmentController implements Initializable {
         stage.show();
 
     }
-
+    /**
+     * Converts  Start date and time to a LocalDateTime value.
+     * @param dateValue
+     * @param timeValue
+     * @return
+     */
     private LocalDateTime convertToDateTime(LocalDate dateValue, String timeValue) {
         LocalDateTime dateTime = dateValue.atTime(TimeUtil.stringtToTime(timeValue));
         return dateTime;
     }
 
+    /**
+     * Returns  the User to the Appointment Page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onClickCancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
         Scene scene = new Scene(parent);
@@ -76,13 +108,19 @@ public class NewAppointmentController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+/**
+ * Initializes Combo Boxes
+ */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        setAppointmentID();
         setComboBox();
 
     }
+
+    /**
+     * Set's Appointment ID for new appointments
+     */
 // Auto Increments appointmentID's
     private void setAppointmentID() {
         try {
@@ -94,7 +132,9 @@ public class NewAppointmentController implements Initializable {
         }
         appointmentID.setText(String.valueOf(currentID));
     }
-
+    /**
+     * Set's Combo Boxes
+     */
     private void setComboBox() {
         //SETS CONTACT NAMES List
         ObservableList<String> contactNames = FXCollections.observableArrayList();

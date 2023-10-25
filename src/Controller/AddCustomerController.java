@@ -119,7 +119,7 @@ public class AddCustomerController implements Initializable {
     }
 
     /**
-     * Returns to
+     * Returns to the previous customer page.
      * @param actionEvent
      * @throws IOException
      */
@@ -131,12 +131,21 @@ public class AddCustomerController implements Initializable {
         stage.show();
     }
 
-
+    /**
+     * Fills Country Combo Box with Country Names
+     * @throws SQLException
+     */
     private void setComboBoxes() throws SQLException {
         allDivisions = DivisionsAccess.getAllDivisions();
          countries = DivisionsAccess.getAllCountries();
         countries.forEach((i) -> countryComboBox.getItems().add(i.getCountryName()));
     }
+
+    /**
+     * Initializes the Add customer page with combo boxes
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -146,6 +155,11 @@ public class AddCustomerController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Sets all State boxes Depending on which Country is selected
+     * @param event
+     */
     @FXML private void onSetCountry(ActionEvent event){
          fDivisionsUS = FXCollections.observableArrayList();
          fDivisionsUK = FXCollections.observableArrayList();

@@ -28,26 +28,62 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ReportsController implements Initializable {
+    /** First report table. */
     @FXML private TableView report1;
+
+    /** Second report table. */
     @FXML private TableView report2;
+
+    /** Third report table. */
     @FXML private TableView report3;
+
+    /** ID column for reports. */
     @FXML private TableColumn idColumn;
+
+    /** Title column for reports. */
     @FXML private TableColumn titleColumn;
+
+    /** Type column for reports. */
     @FXML private TableColumn typeColumn;
+
+    /** Description column for reports. */
     @FXML private TableColumn descriptionColumn;
+
+    /** Location column for reports. */
     @FXML private TableColumn locationColumn;
+
+    /** Start time column for reports. */
     @FXML private TableColumn startColumn;
+
+    /** End time column for reports. */
     @FXML private TableColumn endColumn;
+
+    /** Customer ID column for reports. */
     @FXML private TableColumn customerIdColumn;
+
+    /** Month column for reports. */
     @FXML private TableColumn monthColumn;
+
+    /** Month type column for reports. */
     @FXML private TableColumn monthTypeColumn;
+
+    /** Total appointments column for reports. */
     @FXML private TableColumn totalAppointmentsColumn;
+
+    /** Country column for reports. */
     @FXML private TableColumn countryColumn;
+
+    /** Total customers column for reports. */
     @FXML private TableColumn totalCustomersColumn;
+
+    /** Contact selection combo box. */
     @FXML private ComboBox contact;
-    @FXML private Button logout;
 
-
+    /**
+     * Initializes Contacts combo box and Table Views
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        contact.setItems(ContactAccess.getAllContacts());
@@ -69,22 +105,31 @@ public class ReportsController implements Initializable {
 
     }
 
-
-
+    /**
+     * initializes report 2  Appointments By Type and Month
+     * @throws SQLException
+     */
     private void setReport2() throws SQLException {
-
         monthColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("Months"));
         monthTypeColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("Type"));
         totalAppointmentsColumn.setCellValueFactory(new PropertyValueFactory<Report,Integer>("Count"));
         report2.setItems(AppointmentsAccess.getAppointmentByTypeMonth());
 
     }
+
+    /** Initializes report 3 Total Customers by Country
+     * Set's Report 3
+     * @throws SQLException
+     */
     private void setReport3() throws SQLException {
     countryColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("Country"));
     totalCustomersColumn.setCellValueFactory( new PropertyValueFactory<Report, Integer>("Count"));
     report3.setItems(AppointmentsAccess.getTotalCustomersByCountry());
     }
 
+    /**
+     * Set's Combo box for Selecting Contacts
+     */
     private void setComboBox() {
         ObservableList<String> contactNames = FXCollections.observableArrayList();
         ContactAccess.getAllContacts().forEach((i)->{
@@ -92,11 +137,23 @@ public class ReportsController implements Initializable {
         });
         contact.setItems(contactNames);
     }
+
+    /**
+     * Initializes Report 1 table view once a Contact is selected
+     * @param actionEvent
+     * @throws SQLException
+     */
    public void onSelectContact(ActionEvent actionEvent) throws SQLException {
         String selectedContact = String.valueOf(contact.getSelectionModel().getSelectedItem());
         int contactID = ContactAccess.getContactID(selectedContact);
         report1.setItems(AppointmentsAccess.getAppointmentsByContact(contactID));
     }
+
+    /**
+     * Return's User to the previous page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onClickExit(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/MainPage.fxml"));
         Scene scene = new Scene(parent);
@@ -106,6 +163,12 @@ public class ReportsController implements Initializable {
         stage.show();
 
     }
+
+    /**
+     * Returns User to the login page and Closes DB Connection
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onClickLogout(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
         Scene scene = new Scene(parent);

@@ -25,21 +25,51 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
+
+    /** Add Button for new customers. */
     @FXML protected Button addButton;
+
+    /** Table displaying customers. */
     @FXML TableView customerTable;
+
+    /** Customer ID column. */
     @FXML TableColumn idColumn;
+
+    /** Customer name column. */
     @FXML TableColumn nameColumn;
+
+    /** Address column. */
     @FXML TableColumn addressColumn;
+
+    /** Postal code column. */
     @FXML TableColumn postalCodeColumn;
+
+    /** Phone number column. */
     @FXML TableColumn phoneColumn;
+
+    /** Date created column. */
     @FXML TableColumn dateCreatedColumn;
+
+    /** Created by column. */
     @FXML TableColumn createdByColumn;
+
+    /** Last updated date column. */
     @FXML TableColumn lastUpdatedColumn;
+
+    /** Last updated by column. */
     @FXML TableColumn lastUpdatedByColumn;
+
+    /** Customer division ID column. */
     @FXML TableColumn divisionIdColumn;
+
+    /** Currently selected customer. */
     public static Customer selectedCustomer;
 
-
+    /**
+     * Opens the Update Customer Page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void updateCustomer(ActionEvent actionEvent) throws IOException {
         selectedCustomer= (Customer) customerTable.getSelectionModel().getSelectedItem();
         if(selectedCustomer != null){
@@ -51,22 +81,21 @@ public class CustomerController implements Initializable {
         }else{
             Alerter.displayErrorAlert("No Customer Selected", "Please select a Customer to edit.");
         }
-
-
-
     }
+
+    /**
+     * Returns the user to the main Page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onClickCancel(ActionEvent actionEvent) throws IOException {
-       if( Alerter.confirmAction("Cancel?","Are you sure you would like to return to the main page" )){
+
            Parent parent = FXMLLoader.load(getClass().getResource("/View/MainPage.fxml"));
            Scene scene = new Scene(parent);
            Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
            stage.setScene(scene);
            stage.setResizable(false);
            stage.show();
-
-       }else{
-
-       }
 
     }
 
@@ -78,6 +107,12 @@ public class CustomerController implements Initializable {
         Customer.customers.setAll(CustomerAccess.selectAllCustomers());
         customerTable.setItems(Customer.customers);
     }
+
+    /**
+     * Opens the Add Customer Page
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onClickAddButton(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
         Scene scene = new Scene(parent);
@@ -87,6 +122,13 @@ public class CustomerController implements Initializable {
 
 
     }
+
+    /**
+     * Deletes Selected Customer from the database.
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void onClickDeleteButton(ActionEvent actionEvent) throws IOException, SQLException {
     Customer toDelete = (Customer) customerTable.getSelectionModel().getSelectedItem();
     if(AppointmentsAccess.CheckforCustomerAppointments(toDelete)){
@@ -99,6 +141,11 @@ public class CustomerController implements Initializable {
 
     }
 
+    /**
+     * Initializes the Customer Page including Table Views.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

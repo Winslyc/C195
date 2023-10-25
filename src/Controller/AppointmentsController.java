@@ -23,32 +23,70 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AppointmentsController implements Initializable {
+  /**
+   * The appointments table
+   */
   @FXML
   TableView<Appointment> appointmentsTable;
+  /**
+   * The appointment Id Column
+   */
   @FXML
   TableColumn<Appointment, Integer> appointmentID;
+  /**
+   * The Title column
+   */
   @FXML
   TableColumn<Appointment, String> title;
+
+  /**
+   * The Description Column
+   */
   @FXML
   TableColumn<Appointment, String> description;
+  /**
+   * The Location Column
+   */
   @FXML
   TableColumn<Appointment, String> location;
+  /**
+   * The Contact Column
+    */
   @FXML
   TableColumn<Appointment, String> contact;
+  /**
+   * The Type Column
+   */
   @FXML
   TableColumn<Appointment, String> type;
+  /**
+   * The Start Date/Time Column
+   */
   @FXML
   TableColumn<Appointment, LocalDateTime> startDateandTime;
+  /**
+   * The End Date/Time Column
+    */
   @FXML
   TableColumn<Appointment, LocalDateTime> endDateandTime;
+  /**
+   * The Customer ID Column
+   */
   @FXML
   TableColumn<Appointment, Integer> customerID;
+  /**
+   * The user Id Column
+   */
   @FXML
   TableColumn<Appointment, Integer> userID;
   @FXML RadioButton monthRadioButton;
   @FXML RadioButton weekRadioButton;
 
-
+  /**
+   * Opens update Appointment Page
+   * @param actionEvent
+   * @throws IOException
+   */
   public void onSubmitNew(ActionEvent actionEvent) throws IOException {
     Parent parent = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
     Scene scene = new Scene(parent);
@@ -56,6 +94,12 @@ public class AppointmentsController implements Initializable {
     stage.setScene(scene);
     stage.show();
   }
+
+  /**
+   * Deletes an appointment from the Database
+   * @param actionEvent
+   * @throws SQLException
+   */
   public void onSubmitDelete(ActionEvent actionEvent) throws SQLException {
     Appointment selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
     if(AppointmentsAccess.deleteAppointment(selectedAppointment)){
@@ -69,28 +113,58 @@ public class AppointmentsController implements Initializable {
 
 
   }
+
+  /**
+   * Resets Radio Buttons to an unselected State
+   * @param actionEvent
+   * @throws SQLException
+   */
   public void resetFilters(ActionEvent actionEvent) throws SQLException {
 appointmentsTable.setItems(AppointmentsAccess.getAllAppointments());
 monthRadioButton.setSelected(false);
 weekRadioButton.setSelected(false);
   }
   //TODO Fix the Radiobuttons, so that filter by week can be selected after filter by month.
+
+  /**
+   * Filters by week or month depending on selected radiobutton
+   * @param actionEvent
+   * @throws SQLException
+   */
   public void onSelectRadioButton(ActionEvent actionEvent) throws SQLException {
+    int choice = 0;
     if(monthRadioButton.isSelected()){
-      weekRadioButton.setSelected(false);
-      appointmentsTable.setItems(AppointmentsAccess.getAppointmentsByMonth(LocalDateTime.now().toLocalDate().atStartOfDay()));
-      if(AppointmentsAccess.getAppointmentsByMonth(LocalDateTime.now().toLocalDate().atStartOfDay()).isEmpty()){
-        Alerter.displayAlert("No Appointments", "There are no appointments scheduled in the next 30 days", "If you would like to schedule an appointment please proceed and click add to schedule");
-      }
+      choice = 1;
     }
     if(weekRadioButton.isSelected()){
-      monthRadioButton.setSelected(false);
-      appointmentsTable.setItems(AppointmentsAccess.getAppointmentsByWeek(LocalDateTime.now().toLocalDate().atStartOfDay()));
-      if(AppointmentsAccess.getAppointmentsByWeek(LocalDateTime.now().toLocalDate().atStartOfDay()).isEmpty()){
-        Alerter.displayAlert("No Appointments", "There are no appointments scheduled in the next 7 days", "If you would like to schedule an appointment please proceed and click add to schedule");
+      choice = 2;
+    }
+    switch (choice){
+      case 1: if(monthRadioButton.isSelected()){
+        weekRadioButton.setSelected(false);
+        appointmentsTable.setItems(AppointmentsAccess.getAppointmentsByMonth(LocalDateTime.now().toLocalDate().atStartOfDay()));
+        if(AppointmentsAccess.getAppointmentsByMonth(LocalDateTime.now().toLocalDate().atStartOfDay()).isEmpty()){
+          Alerter.displayAlert("No Appointments", "There are no appointments scheduled in the next 30 days", "If you would like to schedule an appointment please proceed and click add to schedule");
+        }
       }
+        break;
+      case 2: if(weekRadioButton.isSelected()){
+        monthRadioButton.setSelected(false);
+        appointmentsTable.setItems(AppointmentsAccess.getAppointmentsByWeek(LocalDateTime.now().toLocalDate().atStartOfDay()));
+        if(AppointmentsAccess.getAppointmentsByWeek(LocalDateTime.now().toLocalDate().atStartOfDay()).isEmpty()){
+          Alerter.displayAlert("No Appointments", "There are no appointments scheduled in the next 7 days", "If you would like to schedule an appointment please proceed and click add to schedule");
+
+          break;
+    }
+          }
     }
   }
+
+  /**
+   * Opens the Edit Appointment Page
+   * @param actionEvent
+   * @throws IOException
+   */
   public void onSubmitEdit(ActionEvent actionEvent) throws  IOException{
     UpdateAppointmentController.selectedAppointment = appointmentsTable.getSelectionModel().getSelectedItem();
     if(UpdateAppointmentController.selectedAppointment != null) {
@@ -104,6 +178,12 @@ weekRadioButton.setSelected(false);
       Alerter.displayErrorAlert("Appointment not selected", "There is no selectedAppointment selected.");
     }
   }
+
+  /**
+   *  Returns you to the previous page.
+   * @param actionEvent
+   * @throws IOException
+   */
  public void onSubmitBack(ActionEvent actionEvent) throws IOException {
    Parent parent = FXMLLoader.load(getClass().getResource("/View/MainPage.fxml"));
    Scene scene = new Scene(parent);
