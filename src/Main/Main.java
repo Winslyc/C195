@@ -39,7 +39,7 @@ public class Main extends Application {
         primaryStage.setTitle("Client Schedules");
         primaryStage.setScene(scene);
         primaryStage.show();
-        JDBC.openConnection();
+
 
 
     }

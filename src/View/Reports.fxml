@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="585.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportsController">
+<AnchorPane prefHeight="585.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportsController">
    <children>
       <TableView fx:id="report1" layoutX="14.0" layoutY="65.0" prefHeight="224.0" prefWidth="922.0">
         <columns>
@@ -42,7 +42,7 @@
             <TableColumn fx:id="totalAppointmentsColumn" prefWidth="208.0" text="Total Appointments" />
          </columns>
       </TableView>
-      <Button fx:id="exit" layoutX="783.0" layoutY="546.0" mnemonicParsing="false" text="Exit" />
-      <Button fx:id="logout" layoutX="841.0" layoutY="546.0" mnemonicParsing="false" text="Logout" />
+      <Button fx:id="exit" layoutX="783.0" layoutY="546.0" mnemonicParsing="false" onAction="#onClickExit" text="Exit" />
+      <Button fx:id="logout" layoutX="841.0" layoutY="546.0" mnemonicParsing="false" onAction="#onClickLogout" text="Logout" />
    </children>
 </AnchorPane>

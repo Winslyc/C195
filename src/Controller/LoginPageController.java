@@ -5,6 +5,7 @@ import DAO.AppointmentsAccess;
 import DAO.UserAccess;
 import Helper.ActivityLogger;
 import Helper.Alerter;
+import Helper.JDBC;
 import Model.Appointment;
 import Model.User;
 import javafx.collections.FXCollections;
@@ -80,7 +81,7 @@ public class LoginPageController implements Initializable {
 
         try {
             ResourceBundle rb = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
-
+            JDBC.openConnection();
             if(UserAccess.login(UsernameField.getText(), PasswordField.getText())){
                UserAccess.currentUser = new User(UsernameField.getText(), ZoneId.systemDefault(), UserAccess.getUserID(UsernameField.getText()));
                 ActivityLogger.logActivity(UsernameField.getText(), true);
@@ -89,6 +90,7 @@ public class LoginPageController implements Initializable {
                 Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
+
                 AppointmentsAccess.getAllAppointments().forEach(i-> {
                             if(i.getStartDateandTime().isBefore(LocalDateTime.now().plusMinutes(16))&& i.getStartDateandTime().isAfter(LocalDateTime.now())){
                                 upcomingAppointment.add(i);

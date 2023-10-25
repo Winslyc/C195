@@ -2,8 +2,11 @@ package Controller;
 
 import DAO.AppointmentsAccess;
 import DAO.ContactAccess;
+import Helper.JDBC;
 import Model.Appointment;
+import Model.Report;
 import com.mysql.cj.xdevapi.Table;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -49,8 +52,12 @@ public class ReportsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
        contact.setItems(ContactAccess.getAllContacts());
     setComboBox();
-    setReport2();
-    setReport3();
+        try {
+            setReport2();
+            setReport3();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         idColumn.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("appointmentId"));
         titleColumn.setCellValueFactory(new PropertyValueFactory< Appointment,String>("title"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<Appointment,String >("description"));
@@ -59,16 +66,23 @@ public class ReportsController implements Initializable {
         startColumn.setCellValueFactory(new PropertyValueFactory<Appointment, LocalDateTime>("startDateandTime"));
         endColumn.setCellValueFactory(new PropertyValueFactory<Appointment,LocalDateTime>("EndDateandTime"));
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<Appointment,Integer>("customerID"));
-        monthColumn.setCellValueFactory(new  PropertyValueFactory<Appointment, LocalDateTime>("currentMonth;"));
 
     }
 
-    private void setReport3() {
+
+
+    private void setReport2() throws SQLException {
+
+        monthColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("Months"));
+        monthTypeColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("Type"));
+        totalAppointmentsColumn.setCellValueFactory(new PropertyValueFactory<Report,Integer>("Count"));
+        report2.setItems(AppointmentsAccess.getAppointmentByTypeMonth());
+
     }
-
-    private void setReport2() {
-
-
+    private void setReport3() throws SQLException {
+    countryColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("Country"));
+    totalCustomersColumn.setCellValueFactory( new PropertyValueFactory<Report, Integer>("Count"));
+    report3.setItems(AppointmentsAccess.getTotalCustomersByCountry());
     }
 
     private void setComboBox() {
@@ -83,6 +97,26 @@ public class ReportsController implements Initializable {
         int contactID = ContactAccess.getContactID(selectedContact);
         report1.setItems(AppointmentsAccess.getAppointmentsByContact(contactID));
     }
+    public void onClickExit(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/MainPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+    }
+    public void onClickLogout(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/View/LoginPage.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setResizable(false);
+        JDBC.closeConnection();
+        stage.show();
+
+    }
+
 
 
     }

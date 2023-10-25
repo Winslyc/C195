@@ -2,6 +2,8 @@ package DAO;
 
 import Helper.JDBC;
 import Model.Appointment;
+import Model.Customer;
+import Model.Report;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -93,9 +95,9 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         return  true;
     }
     public static FilteredList<Appointment> getAppointmentsByMonth(LocalDateTime loginDateTime) throws SQLException {
-        ObservableList<Appointment> weekAppt = FXCollections.observableArrayList();
-        weekAppt =getAllAppointments();
-        FilteredList<Appointment> filteredWeekAppts = new FilteredList<>(weekAppt);
+        ObservableList<Appointment> monthAppointment = FXCollections.observableArrayList();
+        monthAppointment =getAllAppointments();
+        FilteredList<Appointment> filteredWeekAppts = new FilteredList<>(monthAppointment);
         filteredWeekAppts.setPredicate(appointment -> {
             LocalDateTime apptDate = appointment.getStartDateandTime();
             return((apptDate.isEqual(loginDateTime) || apptDate.isAfter(loginDateTime) && apptDate.isBefore(loginDateTime.plusDays(30))));
@@ -124,5 +126,45 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
             }
         });
         return list;
+    }
+    public static ObservableList getAppointmentByTypeMonth() throws SQLException {
+       String sql = "Select monthname(Start) as Month, Type, count(Appointment_ID) as Count from appointments Group By Type, Start";
+       PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+       ResultSet rs = ps.executeQuery();
+       ObservableList list = FXCollections.observableArrayList();
+       while (rs.next()){
+           String Month = rs.getString("Month");
+           String Type = rs.getString("Type");
+           int count = rs.getInt("Count");
+           list.add(new Report(Month,Type,count));
+        }
+       return list;
+    }
+    public static ObservableList getTotalCustomersByCountry() throws SQLException {
+        String sql ="Select Country, Count(Customer_ID) as Count \n" +
+                "FROM countries \n" +
+                "JOIN first_level_divisions as FLD on countries.Country_ID = FLD.Country_ID\n" +
+                "JOIN customers as Customer on Customer.Division_ID = FLD.Division_ID\n" +
+                "GROUP BY Country,FLD.Division";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        ObservableList list = FXCollections.observableArrayList();
+        while(rs.next()) {
+            String Country = rs.getString("Country");
+            int Count = rs.getInt("Count");
+            list.add(new Report(Country, Count));
+        }
+        return  list;
+        }
+
+    public static boolean CheckforCustomerAppointments(Customer toDelete) throws SQLException {
+        String sql = "SELECT * From Appointments WHERE Customer_ID = ?";
+        PreparedStatement ps =JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, toDelete.getCustomerId());
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            return true;
+        }
+        return false;
     }
 }

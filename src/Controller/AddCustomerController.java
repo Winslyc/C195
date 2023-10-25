@@ -31,23 +31,74 @@ import static Model.Customer.*;
 
 
 public class AddCustomerController implements Initializable {
+    /**
+     * The ID TextField
+     */
     @FXML TextField idTextField;
+    /**
+     *  The Name Text Field
+     */
     @FXML TextField nameTextField;
+    /**
+     * The Address Text Field
+     */
     @FXML TextField addressTextField;
+    /**
+     * The Postal Code TextField;
+     */
     @FXML TextField postalCodeTextField;
+    /**
+     * The Phone Text Field
+     */
     @FXML TextField phoneTextField;
+    /**
+     * The Country Combo Box
+     */
     @FXML ComboBox countryComboBox;
+    /**
+     * The States Combo Box
+     */
     @FXML ComboBox stateComboBox;
+    /**
+     * List of all first level Division in the U.S
+     */
     private ObservableList fDivisionsUS;
+    /**
+     * List of all The first Level Divisions in the UK
+     */
     private ObservableList fDivisionsUK;
+    /**
+     * List of all the first level divisions in Canada
+     */
     private ObservableList fDivisionsCA;
+    /**
+     * List of All Divisions
+     */
     private ObservableList<Divisions> allDivisions;
+    /**
+     * List of All Countries
+     */
     private ObservableList<Country> countries;
+    /**
+     * Current Division That is being added.
+     */
     private Divisions currentDivision;
-    //Adds Customers to  the list of customers.
+
+    /**
+     * Returns you to the customer Page
+     * @param event
+     * @throws IOException
+     */
     public void onClickCancel(ActionEvent event) throws IOException {
         returnToCustomer(event);
     }
+
+    /**
+     * Adds a customer to the SQL Database.
+     * @param event
+     * @throws SQLException
+     * @throws IOException
+     */
     public void onSubmitAdd(ActionEvent event) throws SQLException, IOException {
         int id = Integer.parseInt(idTextField.getText());
         String name = nameTextField.getText();
@@ -67,6 +118,11 @@ public class AddCustomerController implements Initializable {
         returnToCustomer(event);
     }
 
+    /**
+     * Returns to
+     * @param actionEvent
+     * @throws IOException
+     */
     private void returnToCustomer(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/Customer.fxml"));
         Scene scene = new Scene(parent);

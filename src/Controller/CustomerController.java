@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO.AppointmentsAccess;
 import DAO.CustomerAccess;
 import Helper.Alerter;
 import Model.Customer;
@@ -88,9 +89,13 @@ public class CustomerController implements Initializable {
     }
     public void onClickDeleteButton(ActionEvent actionEvent) throws IOException, SQLException {
     Customer toDelete = (Customer) customerTable.getSelectionModel().getSelectedItem();
+    if(AppointmentsAccess.CheckforCustomerAppointments(toDelete)){
         Alerter.displayAlert("Delete Succesful","Deletion Succesful ",toDelete.getCustomerName() + " has been succesfully deleted.");
-    CustomerAccess.deleteCustomer(toDelete);
-    refreshCustomersList();
+        CustomerAccess.deleteCustomer(toDelete);
+    } else {
+        Alerter.displayErrorAlert("Failure", "This Customer still has Appointments. Please Delete all appointments before trying again.");
+    }
+        refreshCustomersList();
 
     }
 
