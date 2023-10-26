@@ -12,7 +12,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class DivisionsAccess {
-
+    /**
+     * Returns a list of all Divisions.
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Divisions> getAllDivisions() throws SQLException{
         ObservableList<Divisions> firstLevelDivisionsObservableList = FXCollections.observableArrayList();
         String sql = "SELECT * from first_level_divisions";
@@ -28,6 +32,12 @@ public class DivisionsAccess {
         }
         return firstLevelDivisionsObservableList;
     }
+
+    /**
+     * Returns a list of All Countries
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Country> getAllCountries() throws  SQLException{
         ObservableList<Country> countriesList  = FXCollections.observableArrayList();
         String sql ="Select * from Countries";
@@ -38,7 +48,14 @@ public class DivisionsAccess {
         }
         return countriesList;
     }
-public static Divisions getDivision(int divisionID) throws SQLException {
+
+    /**
+     * Returns a division from the Divison ID
+     * @param divisionID
+     * @return
+     * @throws SQLException
+     */
+    public static Divisions getDivision(int divisionID) throws SQLException {
         String sql = "Select * from first_level_divisions WHERE Division_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, divisionID);

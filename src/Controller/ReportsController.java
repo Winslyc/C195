@@ -2,11 +2,10 @@ package Controller;
 
 import DAO.AppointmentsAccess;
 import DAO.ContactAccess;
+import DAO.CustomerAccess;
 import Helper.JDBC;
 import Model.Appointment;
 import Model.Report;
-import com.mysql.cj.xdevapi.Table;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +23,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ReportsController implements Initializable {
@@ -124,7 +122,7 @@ public class ReportsController implements Initializable {
     private void setReport3() throws SQLException {
     countryColumn.setCellValueFactory(new PropertyValueFactory<Report, String>("Country"));
     totalCustomersColumn.setCellValueFactory( new PropertyValueFactory<Report, Integer>("Count"));
-    report3.setItems(AppointmentsAccess.getTotalCustomersByCountry());
+    report3.setItems(CustomerAccess.getTotalCustomersByCountry());
     }
 
     /**

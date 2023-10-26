@@ -4,6 +4,7 @@ import Helper.Alerter;
 import Helper.JDBC;
 import Model.Customer;
 import Model.Divisions;
+import Model.Report;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,7 +12,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 
 public abstract class CustomerAccess {
-    public static int insert(String Name, String Address, String Postal_Code, String Phone) throws SQLException {
+   /* public static int insert(String Name, String Address, String Postal_Code, String Phone) throws SQLException {
         String sql = "INSERT INTO customers(Customer_name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, Name);
@@ -22,7 +23,12 @@ public abstract class CustomerAccess {
         int rows = ps.executeUpdate();
 
         return rows;
-    }
+    }    */
+
+    /**
+     * @return A list of all Customers
+     * @throws SQLException
+     */
     public static ObservableList selectAllCustomers() throws  SQLException{
         String sql = "SELECT * FROM Customers";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -50,6 +56,12 @@ public abstract class CustomerAccess {
 
         return allCustomers;
     }
+
+    /**
+     * Removes a Customer from the Database
+     * @param newCustomer
+     * @throws SQLException
+     */
     public static void deleteCustomer(Customer newCustomer) throws SQLException{
         String sql = "DELETE FROM CUSTOMERS WHERE(Customer_ID = ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -58,6 +70,12 @@ public abstract class CustomerAccess {
 
 
     }
+
+    /**
+     * Adds a Customer to the database
+     * @param newCustomer
+     * @throws SQLException
+     */
     public static void addcustomer(Customer newCustomer) throws SQLException {
         String sql = "INSERT INTO customers(Customer_ID, Customer_name, Address, Postal_Code, Phone" + "" +
                 ",Create_Date, Created_By,Last_Update,Last_Updated_By,Division_ID) VALUES(?, ?, ?, ?,?,?,?,?,?,?)";
@@ -75,6 +93,12 @@ public abstract class CustomerAccess {
         ps.executeUpdate();
     }
 
+    /**
+     * Updates Customers in the Database
+     * @param id
+     * @param updatedCustomer
+     * @throws SQLException
+     */
     public static void updateCustomer(int id, Customer updatedCustomer) throws SQLException {
         String sql = "UPDATE customers " +
                 "SET Customer_ID = ?, Customer_Name = ?, Address = ?, Postal_Code= ?, Phone = ?, Last_Update = ?,  Last_Updated_By = ?, Division_ID = ? " +
@@ -91,4 +115,26 @@ public abstract class CustomerAccess {
         ps.setInt(9, id);
         ps.executeUpdate();
     }
+
+    /**
+     * Returns a list of Total Customers By country
+     * @return
+     * @throws SQLException
+     */
+    public static ObservableList getTotalCustomersByCountry() throws SQLException {
+        String sql ="Select Country, Count(Customer_ID) as Count \n" +
+                "FROM countries \n" +
+                "JOIN first_level_divisions as FLD on countries.Country_ID = FLD.Country_ID\n" +
+                "JOIN customers as Customer on Customer.Division_ID = FLD.Division_ID\n" +
+                "GROUP BY Country,FLD.Division";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        ObservableList list = FXCollections.observableArrayList();
+        while(rs.next()) {
+            String Country = rs.getString("Country");
+            int Count = rs.getInt("Count");
+            list.add(new Report(Country, Count));
+        }
+        return  list;
+        }
 }

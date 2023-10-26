@@ -12,7 +12,11 @@ import java.sql.*;
 import java.time.LocalDateTime;
 
 public abstract class AppointmentsAccess {
-
+    /**
+     * Returns a list of all Appointments.
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getAllAppointments() throws SQLException {
         ObservableList <Appointment> allAppointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM Appointments";
@@ -35,6 +39,11 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
     return allAppointments;
     }
 
+    /**
+     * Adds a new appointment to the Database
+     * @param newAppointment
+     * @throws SQLException
+     */
     public static void addNewAppointment(Appointment newAppointment) throws SQLException {
         String sql = "INSERT INTO Appointments(Appointment_ID, Title, " +
                 "Description, Location, Type, Start, End, Create_Date, Created_By," +
@@ -59,6 +68,11 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
 
     }
 
+    /**
+     * Updates an appointment in the database
+     * @param newAppointment
+     * @throws SQLException
+     */
     public static void updateAppointment(Appointment newAppointment) throws SQLException {
         String sql = "UPDATE Appointments" +
                 " SET Appointment_ID = ?, Title = ?, Description = ?, " +
@@ -81,6 +95,12 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         ps.setInt(13, newAppointment.getAppointmentId());
         ps.executeUpdate();
     }
+
+    /**
+     * Removes an appointment from the Database
+     * @param newAppointment
+     * @return
+     */
     public static boolean deleteAppointment(Appointment newAppointment)  {
         try {
             String sql = "DELETE FROM Appointments WHERE(Appointment_ID = ?)";
@@ -94,6 +114,13 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
 
         return  true;
     }
+
+    /**
+     * Returns a List of Filtered Appointments from the current Date to the Next 30 Days
+     * @param loginDateTime
+     * @return
+     * @throws SQLException
+     */
     public static FilteredList<Appointment> getAppointmentsByMonth(LocalDateTime loginDateTime) throws SQLException {
         ObservableList<Appointment> monthAppointment = FXCollections.observableArrayList();
         monthAppointment =getAllAppointments();
@@ -106,6 +133,12 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
 
     }
 
+    /**
+     * Returns a List of Filtered Appointments from the current Date to the Next 7 Days
+     * @param loginDateTime
+     * @return
+     * @throws SQLException
+     */
     public static FilteredList<Appointment>  getAppointmentsByWeek(LocalDateTime loginDateTime) throws SQLException {
         ObservableList<Appointment> weekAppt = FXCollections.observableArrayList();
         weekAppt =getAllAppointments();
@@ -117,7 +150,12 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         return filteredWeekAppts;
     }
 
-
+    /**
+     * Returns A list of Appointments For Each Contact
+     * @param contactID
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList getAppointmentsByContact(int contactID) throws SQLException {
         ObservableList list = FXCollections.observableArrayList();
         getAllAppointments().forEach(i-> {
@@ -127,6 +165,12 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         });
         return list;
     }
+
+    /**
+     * Returns the Amount of Appointments By type and Month in a list
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList getAppointmentByTypeMonth() throws SQLException {
        String sql = "Select monthname(Start) as Month, Type, count(Appointment_ID) as Count from appointments Group By Type, Start";
        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -140,22 +184,6 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         }
        return list;
     }
-    public static ObservableList getTotalCustomersByCountry() throws SQLException {
-        String sql ="Select Country, Count(Customer_ID) as Count \n" +
-                "FROM countries \n" +
-                "JOIN first_level_divisions as FLD on countries.Country_ID = FLD.Country_ID\n" +
-                "JOIN customers as Customer on Customer.Division_ID = FLD.Division_ID\n" +
-                "GROUP BY Country,FLD.Division";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        ObservableList list = FXCollections.observableArrayList();
-        while(rs.next()) {
-            String Country = rs.getString("Country");
-            int Count = rs.getInt("Count");
-            list.add(new Report(Country, Count));
-        }
-        return  list;
-        }
 
     public static boolean CheckforCustomerAppointments(Customer toDelete) throws SQLException {
         String sql = "SELECT * From Appointments WHERE Customer_ID = ?";

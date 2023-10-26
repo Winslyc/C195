@@ -41,6 +41,13 @@ public class UserAccess {
        }
        return false;
     }
+
+    /**
+     * Returns the user Id.
+     * @param username search term used to find user id.
+     * @return
+     * @throws SQLException
+     */
     public static int getUserID(String username) throws SQLException {
     String sql = "SELECT * FROM USERS WHERE User_Name = ?";
     PreparedStatement ps = JDBC.connection.prepareStatement(sql);

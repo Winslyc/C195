@@ -28,23 +28,57 @@ import static Model.Customer.customers;
 
 
 public class UpdateCustomerController implements Initializable {
+    /** ID input field for the entity. */
     @FXML TextField idTextField;
+
+    /** Name input field for the entity. */
     @FXML TextField nameTextField;
+
+    /** Address input field for the entity. */
     @FXML TextField addressTextField;
+
+    /** Postal code input field for the entity. */
     @FXML TextField postalCodeTextField;
+
+    /** Phone number input field for the entity. */
     @FXML TextField phoneTextField;
+
+    /** Country selection combo box. */
     @FXML ComboBox countryComboBox;
+
+    /** State selection combo box. */
     @FXML ComboBox stateComboBox;
+
+    /** Observable list for first-level divisions in the United States. */
     private ObservableList fDivisionsUS;
+
+    /** Observable list for first-level divisions in the United Kingdom. */
     private ObservableList fDivisionsUK;
+
+    /** Observable list for first-level divisions in Canada. */
     private ObservableList fDivisionsCA;
+
+    /** Observable list of all first-level divisions. */
     private ObservableList<Divisions> allDivisions;
+
+    /** Observable list of countries. */
     private ObservableList<Country> countries;
-    private Divisions currentDivision;
-    //Adds Customers to  the list of customers.
+
+    /**
+     * Returns user to the previous page
+     * @param event
+     * @throws IOException
+     */
     public void onClickCancel(ActionEvent event) throws IOException {
         returnToCustomer(event);
     }
+
+    /**
+     * Updates users in the Database
+     * @param event
+     * @throws SQLException
+     * @throws IOException
+     */
     public void onSubmitUpdate(ActionEvent event) throws SQLException, IOException {
         int id = Integer.parseInt(idTextField.getText());
         String name = nameTextField.getText();
@@ -64,6 +98,11 @@ public class UpdateCustomerController implements Initializable {
         returnToCustomer(event);
     }
 
+    /**
+     * Returns Current User to the previous page
+     * @param actionEvent
+     * @throws IOException
+     */
     private void returnToCustomer(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/Customer.fxml"));
         Scene scene = new Scene(parent);
@@ -72,12 +111,21 @@ public class UpdateCustomerController implements Initializable {
         stage.show();
     }
 
-
+    /**
+     * Set's the Country Combo Box
+     * @throws SQLException
+     */
     private void setComboBoxes() throws SQLException {
         allDivisions = DivisionsAccess.getAllDivisions();
          countries = DivisionsAccess.getAllCountries();
         countries.forEach((i) -> countryComboBox.getItems().add(i.getCountryName()));
     }
+
+    /**
+     * Initializes Text Fields
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         idTextField.clear();
@@ -120,7 +168,7 @@ public class UpdateCustomerController implements Initializable {
 
 
 
-    private void SetCountry(String country) {
+/*    private void SetCountry(String country) {
         switch (country){
             case "U.S": stateComboBox.setItems(fDivisionsUS);
             case "U.K": stateComboBox.setItems(fDivisionsUK);
@@ -128,6 +176,11 @@ public class UpdateCustomerController implements Initializable {
         }
     }
 
+ */
+
+    /**
+     * Handles Event where Country Combo Box is set
+     */
     @FXML private void onSetCountry(){
          fDivisionsUS = FXCollections.observableArrayList();
          fDivisionsUK = FXCollections.observableArrayList();

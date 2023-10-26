@@ -10,6 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class ContactAccess {
+    /**
+     * Returns a list of all Contacts
+     * @return
+     */
     public static ObservableList<Contact> getAllContacts(){
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
         String sql = "SELECT * FROM CONTACTS";
@@ -30,7 +34,12 @@ public abstract class ContactAccess {
 
     }
 
-
+    /**
+     * Returns Contact ID from the contact name that is passed in
+     * @param contact
+     * @return
+     * @throws SQLException
+     */
     public static int getContactID(String contact) throws SQLException {
         String sql = "SELECT * FROM CONTACTS WHERE Contact_Name = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -43,6 +52,12 @@ public abstract class ContactAccess {
         return contact_id;
     }
 
+    /**
+     * Returns a Contacts name from a Contact Id that is passed in
+     * @param contactID
+     * @return
+     * @throws SQLException
+     */
     public static String getContactName(int contactID) throws SQLException {
 
         String sql = "SELECT * FROM CONTACTS WHERE Contact_ID = ?";

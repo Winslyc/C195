@@ -29,22 +29,56 @@ import java.util.ResourceBundle;
 import static DAO.ContactAccess.getContactName;
 
 
-public class UpdateAppointmentController implements Initializable {
-    @FXML private TextField appointmentID;
+public class UpdateAppointmentController implements Initializable {    /** Appointment ID input field. */
+@FXML private TextField appointmentID;
+
+    /** Appointment title input field. */
     @FXML private TextField appointmentTitle;
+
+    /** Description input field. */
     @FXML private TextField descriptionTextField;
+
+    /** Location input field. */
     @FXML private TextField locationTextField;
+
+    /** Type input field. */
     @FXML private TextField typeTextField;
+
+    /** User ID input field. */
     @FXML private TextField userID;
+
+    /** Customer ID input field. */
     @FXML private TextField customerId;
+
+    /** Contact selection combo box. */
     @FXML private ComboBox contactComboBox;
+
+    /** Start date picker. */
     @FXML private DatePicker startDate;
+
+    /** End date picker. */
     @FXML private DatePicker endDate;
+
+    /** Start time selection combo box. */
     @FXML private ComboBox startTime;
+
+    /** End time selection combo box. */
     @FXML private ComboBox endTime;
-    public  static Appointment selectedAppointment;
+
+    /** The selected appointment to be updated. */
+    public static Appointment selectedAppointment;
+    /**
+     * The currently selected ID
+     */
     private int currentID;
 //TODO add error handling functionality
+
+    /**
+     * Handles Updating a selected Appointment
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void onSubmitUpdate(ActionEvent actionEvent) throws SQLException, IOException {
         int id = Integer.parseInt(appointmentID.getText());
         String title = appointmentTitle.getText();
@@ -67,11 +101,22 @@ public class UpdateAppointmentController implements Initializable {
 
     }
 
+    /**
+Converts Strings dateValue and timeValue to a Local Date Time Object
+     * @param dateValue
+     * @param timeValue
+     * @return
+     */
     private LocalDateTime convertToDateTime(LocalDate dateValue, String timeValue) {
         LocalDateTime dateTime = dateValue.atTime(TimeUtil.stringtToTime(timeValue));
         return dateTime;
     }
 
+    /**
+     * Returns user to the previous Menu.
+     * @param actionEvent
+     * @throws IOException
+     */
     public void onClickCancel(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
         Scene scene = new Scene(parent);
@@ -81,6 +126,11 @@ public class UpdateAppointmentController implements Initializable {
 
     }
 
+    /**
+     * Initializes all of the data for an appointment
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        setAppointmentID();
@@ -104,6 +154,10 @@ public class UpdateAppointmentController implements Initializable {
 
     }
 // Auto Increments appointmentID's
+
+    /**
+     * Sets appointment ID
+     */
     private void setAppointmentID() {
             currentID =selectedAppointment.getAppointmentId();
 
@@ -111,6 +165,9 @@ public class UpdateAppointmentController implements Initializable {
         appointmentID.setText(String.valueOf(currentID));
     }
 
+    /**
+     * Set's the Contact Combo box
+     */
     private void setComboBox() {
         //SETS CONTACT NAMES List
         ObservableList<String> contactNames = FXCollections.observableArrayList();
