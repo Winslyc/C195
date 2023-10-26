@@ -21,6 +21,5 @@
             <Font size="30.0" />
          </font>
       </Button>
-      <Button layoutX="357.0" layoutY="339.0" mnemonicParsing="false" onAction="#onSelectLogout" text="Logout" />
    </children>
 </AnchorPane>
