@@ -2,6 +2,7 @@ package Controller;
 
 import DAO.CustomerAccess;
 import DAO.DivisionsAccess;
+import Helper.Alerter;
 import Model.Country;
 import Model.Customer;
 import Model.Divisions;
@@ -91,11 +92,26 @@ public class UpdateCustomerController implements Initializable {
                divisionID = selectedDiv.getDivisionId();
            }
        }
+        if(idTextField.getText().isEmpty()){
+            Alerter.displayAlert("No ID","Please restart the application","");
+        }else if(nameTextField.getText().isEmpty()){
+            Alerter.displayAlert("Error","Name not  filled"," Please fill the name section");
+        }else if(addressTextField.getText().isEmpty()){
+            Alerter.displayAlert("Error","Address Empty","Please fill the Address Field");
+        }else if(postalCodeTextField.getText().isEmpty()){
+            Alerter.displayAlert("Error","Postal Code Empty","Please fill the Postal Code Field");
+        }else if(phoneTextField.getText().isEmpty()){
+            Alerter.displayAlert("Error","Phone Field Empty","Please provide your phone number in the Field marked Phone");
+        } else if(divisionID == 0 ){
+            Alerter.displayAlert("Error","Division Not Selected","Please Select a Country and State");
+        }
+        else{
+            Customer updatedCustomer = new Customer(id, name, address, postal, phone,divisionID, DivisionsAccess.getDivision(divisionID));
 
-        Customer updatedCustomer = new Customer(id, name, address, postal, phone,divisionID, DivisionsAccess.getDivision(divisionID));
+            CustomerAccess.updateCustomer(id, updatedCustomer);
+            returnToCustomer(event);
+        }
 
-        CustomerAccess.updateCustomer(id, updatedCustomer);
-        returnToCustomer(event);
     }
 
     /**

@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500.0" prefWidth="1073.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AppointmentsController">
+<AnchorPane prefHeight="500.0" prefWidth="1073.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AppointmentsController">
    <children>
       <TableView fx:id="appointmentsTable" layoutX="9.0" layoutY="14.0" prefHeight="407.0" prefWidth="1046.0">
         <columns>
@@ -26,8 +26,8 @@
       <Button fx:id="editButton" layoutX="888.0" layoutY="452.0" mnemonicParsing="false" onAction="#onSubmitEdit" text="Edit" />
       <Button layoutX="1006.0" layoutY="452.0" mnemonicParsing="false" onAction="#onSubmitBack" text="Exit" />
       <Button fx:id="deleteButton" layoutX="940.0" layoutY="452.0" mnemonicParsing="false" onAction="#onSubmitDelete" text="Delete" />
-      <RadioButton fx:id="monthRadioButton" layoutX="150.0" layoutY="456.0" mnemonicParsing="false" onAction="#onSelectRadioButton" text="Filter By Month" />
-      <RadioButton fx:id="weekRadioButton" layoutX="268.0" layoutY="456.0" mnemonicParsing="false" onAction="#onSelectRadioButton" text="Filter By Week" />
+      <RadioButton fx:id="monthRadioButton" layoutX="150.0" layoutY="456.0" mnemonicParsing="false" onAction="#onSelectMonthly" text="Filter By Month" />
+      <RadioButton fx:id="weekRadioButton" layoutX="268.0" layoutY="456.0" mnemonicParsing="false" onAction="#onSelectWeekly" text="Filter By Week" />
       <Button layoutX="391.0" layoutY="452.0" mnemonicParsing="false" onAction="#resetFilters" text="Reset" />
    </children>
 </AnchorPane>

@@ -126,7 +126,7 @@ public abstract class CustomerAccess {
                 "FROM countries \n" +
                 "JOIN first_level_divisions as FLD on countries.Country_ID = FLD.Country_ID\n" +
                 "JOIN customers as Customer on Customer.Division_ID = FLD.Division_ID\n" +
-                "GROUP BY Country,FLD.Division";
+                "GROUP BY Country";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         ObservableList list = FXCollections.observableArrayList();

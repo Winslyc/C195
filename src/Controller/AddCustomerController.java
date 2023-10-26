@@ -3,6 +3,7 @@ package Controller;
 import DAO.CustomerAccess;
 import DAO.DivisionsAccess;
 import DAO.UserAccess;
+import Helper.Alerter;
 import Model.Country;
 import Model.Customer;
 import Model.Divisions;
@@ -111,11 +112,27 @@ public class AddCustomerController implements Initializable {
                divisionID = selectedDiv.getDivisionId();
            }
        }
-     //   Divisions division = new Divisions(countryComboBox.getSelectionModel().getSelectedItem().toString(),)
-        Customer newCustomer = new Customer(id, name, address, postal, phone,divisionID, DivisionsAccess.getDivision(divisionID));
+       if(idTextField.getText().isEmpty()){
+           Alerter.displayAlert("No ID","Please restart the application","");
+       }else if(nameTextField.getText().isEmpty()){
+           Alerter.displayAlert("Error","Name not  filled"," Please fill the name section");
+       }else if(addressTextField.getText().isEmpty()){
+           Alerter.displayAlert("Error","Address Empty","Please fill the Address Field");
+       }else if(postalCodeTextField.getText().isEmpty()){
+           Alerter.displayAlert("Error","Postal Code Empty","Please fill the Postal Code Field");
+       }else if(phoneTextField.getText().isEmpty()){
+           Alerter.displayAlert("Error","Phone Field Empty","Please provide your phone number in the Field marked Phone");
+       } else if(divisionID == 0 ){
+           Alerter.displayAlert("Error","Division Not Selected","Please Select a Country and State");
+       }
+       else{
+           Customer newCustomer = new Customer(id, name, address, postal, phone,divisionID, DivisionsAccess.getDivision(divisionID));
 
-        CustomerAccess.addcustomer(newCustomer);
-        returnToCustomer(event);
+           CustomerAccess.addcustomer(newCustomer);
+           returnToCustomer(event);
+       }
+     //   Divisions division = new Divisions(countryComboBox.getSelectionModel().getSelectedItem().toString(),)
+
     }
 
     /**

@@ -2,6 +2,7 @@ package Controller;
 
 import DAO.AppointmentsAccess;
 import DAO.ContactAccess;
+import Helper.Alerter;
 import Helper.TimeUtil;
 import Model.Appointment;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -76,15 +78,45 @@ public class NewAppointmentController implements Initializable {
         int contactID = ContactAccess.getContactID(selectedContact);
         LocalDateTime startDateTime = convertToDateTime(startDate.getValue(), startTime.getSelectionModel().getSelectedItem().toString());
         LocalDateTime endDateTime= convertToDateTime(endDate.getValue(), endTime.getSelectionModel().getSelectedItem().toString());
-        Appointment newAppointment = new Appointment(id, title, description, location, type, startDateTime,endDateTime,customer,user,contactID);
-        AppointmentsAccess.addNewAppointment(newAppointment);
-        Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage)((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+       if(appointmentID.getText().isEmpty()){
+           Alerter.displayAlert("No ID","Please restart the application","");
+       }else if(title.isEmpty()){
+           Alerter.displayAlert("Title Empty","Please Fill The Item Text Field","");
+       }else if(description.isEmpty()){
+           Alerter.displayAlert("No Description","Please provide a description for you appointment","");
+       }else if(location.isEmpty()){
+           Alerter.displayAlert("No Location","Please provide a location for your appointment","");
+       }else if(type.isEmpty()){
+           Alerter.displayAlert("Type Empty ","Please provide an appointment Type","");
+       }else if(userID.getText().isEmpty()){
+           Alerter.displayAlert("User ID Empty","Please select a User","");
+       }else if(customerId.getText().isEmpty()){
+           Alerter.displayAlert("No Customer ID","Please select a Customer","");
+       }else if(startDate.getValue() ==null){
+           Alerter.displayAlert("No Start Date Selected","Please Select a start Date","");
+       }else if(startTime.getSelectionModel().getSelectedItem() == null){
+           Alerter.displayAlert("No Start Time Selected","Please Select a start Time","");
+       }else if(endDate.getValue() == null){
+           Alerter.displayAlert("No End Date Selected","Please Select an End Date","");
+       }else if( endTime.getSelectionModel().getSelectedItem() == null){
+           Alerter.displayAlert("No End Time Selected","Please Select an End Time","");
+       }else if(selectedContact.isEmpty()){
+           Alerter.displayAlert("No ID","Please restart the application","");
+       }else if(startDateTime.isAfter(endDateTime)){
+           Alerter.displayAlert("Time Error", "End Time Cannot begin before Start Date and Time","");
+       } else if(startDateTime.isBefore(LocalDateTime.now())){
+           Alerter.displayAlert("Time Error", "Start Time Cannot Be Set in the past.", "");
+        }
 
-    }
+        else{ Appointment newAppointment = new Appointment(id, title, description, location, type, startDateTime,endDateTime,customer,user,contactID);
+            AppointmentsAccess.addNewAppointment(newAppointment);
+            Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
+        }
     /**
      * Converts  Start date and time to a LocalDateTime value.
      * @param dateValue
@@ -115,6 +147,9 @@ public class NewAppointmentController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
        setAppointmentID();
         setComboBox();
+
+    }
+    public void onSelectTime(){
 
     }
 

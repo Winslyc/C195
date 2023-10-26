@@ -99,7 +99,6 @@ public class LoginPageController implements Initializable {
                         }
                 );
                 if(upcomingAppointment.isEmpty()){
-                    Alerter.displayAlert("Upcoming Appointments", "There are no upcoming appointments", "There are no appointments in the next 15 minutes");
                 }else{
                     upcomingAppointment.forEach(i->{
                         Alerter.displayAlert("Upcoming Appointment", "You have an upcoming appointment at " + i.getStartDateandTime().toString(), "Please be on time.");

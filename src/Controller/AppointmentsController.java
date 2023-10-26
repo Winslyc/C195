@@ -127,38 +127,30 @@ weekRadioButton.setSelected(false);
   //TODO Fix the Radiobuttons, so that filter by week can be selected after filter by month.
 
   /**
-   * Filters by week or month depending on selected radiobutton
+   * Filters by month all upcoming appointments
    * @param actionEvent
    * @throws SQLException
    */
-  public void onSelectRadioButton(ActionEvent actionEvent) throws SQLException {
-    int choice = 0;
-    if(monthRadioButton.isSelected()){
-      choice = 1;
-    }
-    if(weekRadioButton.isSelected()){
-      choice = 2;
-    }
-    switch (choice){
-      case 1: if(monthRadioButton.isSelected()){
+  public void onSelectMonthly(ActionEvent actionEvent) throws SQLException {
         weekRadioButton.setSelected(false);
         appointmentsTable.setItems(AppointmentsAccess.getAppointmentsByMonth(LocalDateTime.now().toLocalDate().atStartOfDay()));
         if(AppointmentsAccess.getAppointmentsByMonth(LocalDateTime.now().toLocalDate().atStartOfDay()).isEmpty()){
           Alerter.displayAlert("No Appointments", "There are no appointments scheduled in the next 30 days", "If you would like to schedule an appointment please proceed and click add to schedule");
         }
-      }
-        break;
-      case 2: if(weekRadioButton.isSelected()){
-        monthRadioButton.setSelected(false);
-        appointmentsTable.setItems(AppointmentsAccess.getAppointmentsByWeek(LocalDateTime.now().toLocalDate().atStartOfDay()));
-        if(AppointmentsAccess.getAppointmentsByWeek(LocalDateTime.now().toLocalDate().atStartOfDay()).isEmpty()){
-          Alerter.displayAlert("No Appointments", "There are no appointments scheduled in the next 7 days", "If you would like to schedule an appointment please proceed and click add to schedule");
-
-          break;
-    }
-          }
-    }
   }
+
+  /**
+   * Filters By Week all upcoming appointments.
+   * @param actionEvent
+   * @throws SQLException
+   */
+  public void onSelectWeekly(ActionEvent actionEvent) throws SQLException{
+    monthRadioButton.setSelected(false);
+    appointmentsTable.setItems(AppointmentsAccess.getAppointmentsByWeek(LocalDateTime.now().toLocalDate().atStartOfDay()));
+    if(AppointmentsAccess.getAppointmentsByWeek(LocalDateTime.now().toLocalDate().atStartOfDay()).isEmpty()) {
+      Alerter.displayAlert("No Appointments", "There are no appointments scheduled in the next 7 days", "If you would like to schedule an appointment please proceed and click add to schedule");
+    }
+    }
 
   /**
    * Opens the Edit Appointment Page
