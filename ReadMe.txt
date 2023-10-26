@@ -17,5 +17,7 @@ JDBC: mysql_connector_java_8.1.0
 ##Additional Report: the 3rd Report displays the total number of Customers per Country
 
 Instructions To Run
-- Open the folder in IntelliJ idea and update the path for your JavaFX SDK, JDK, and JDBC.
-- Press Run.
+- Open the file in IntelliJ idea and update the path for your JavaFX SDK, JDK, and JDBC.
+- Navigate to Run Configurations Then Edit Configurations if there are none present.
+-Add VM Options then input: --module-path ${PATH_TO_FX} --add-modules javafx.fxml,javafx.controls,javafx.graphics
+- Click the Run Button.
