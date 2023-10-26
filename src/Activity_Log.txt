@@ -229,3 +229,6 @@
 2023-10-25 | 22:46:59.599771400 | User: Admin | Login Succesful
 2023-10-25 | 22:48:39.979761600 | User: Admin | Login Succesful
 2023-10-25 | 22:55:30.564264400 | User: Admin | Login Succesful
+2023-10-26 | 09:35:51.316340 | User: Admin | Login Succesful
+2023-10-26 | 10:59:43.428287800 | User: Admin  | Login Failed
+2023-10-26 | 11:08:40.987244900 | User: Admin | Login Succesful

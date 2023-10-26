@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainPageController">
+<AnchorPane prefHeight="383.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainPageController">
    <children>
       <Button fx:id="customerTab" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSubmitCustomers" prefHeight="164.0" prefWidth="188.0" style="-fx-border-color: transparent; -fx-background-color: #5afcd2;" text="Customers" textOverrun="CLIP">
          <font>
@@ -16,10 +16,11 @@
             <Font size="30.0" />
          </font>
       </Button>
-      <Button fx:id="Reports" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#onSubmitReports" prefHeight="164.0" prefWidth="188.0" style="-fx-border-color: transparent; -fx-background-color: #5afcd2;" text="Reports" textOverrun="CLIP">
+      <Button fx:id="Reports" alignment="CENTER" contentDisplay="CENTER" layoutX="119.0" layoutY="200.0" mnemonicParsing="false" onAction="#onSubmitReports" prefHeight="164.0" prefWidth="188.0" style="-fx-border-color: transparent; -fx-background-color: #5afcd2;" text="Reports" textOverrun="CLIP">
          <font>
             <Font size="30.0" />
          </font>
       </Button>
+      <Button layoutX="357.0" layoutY="339.0" mnemonicParsing="false" onAction="#onSelectLogout" text="Logout" />
    </children>
 </AnchorPane>

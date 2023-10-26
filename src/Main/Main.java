@@ -35,7 +35,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("../View/LoginPage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600,400);
+        Scene scene = new Scene(fxmlLoader.load(), 330,250);
         primaryStage.setTitle("Client Schedules");
         primaryStage.setScene(scene);
         primaryStage.show();

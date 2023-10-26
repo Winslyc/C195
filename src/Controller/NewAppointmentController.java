@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -106,7 +107,9 @@ public class NewAppointmentController implements Initializable {
            Alerter.displayAlert("Time Error", "End Time Cannot begin before Start Date and Time","");
        } else if(startDateTime.isBefore(LocalDateTime.now())){
            Alerter.displayAlert("Time Error", "Start Time Cannot Be Set in the past.", "");
-        }
+        }else if(startDateTime.getDayOfWeek() == DayOfWeek.SATURDAY || startDateTime.getDayOfWeek() == DayOfWeek.SUNDAY){
+           Alerter.displayAlert("","The Office is Closed on Weekends Please select a different Date", "");
+       }
 
         else{ Appointment newAppointment = new Appointment(id, title, description, location, type, startDateTime,endDateTime,customer,user,contactID);
             AppointmentsAccess.addNewAppointment(newAppointment);

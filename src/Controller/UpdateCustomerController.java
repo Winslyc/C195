@@ -152,7 +152,7 @@ public class UpdateCustomerController implements Initializable {
         countryComboBox.getSelectionModel().clearSelection();
         try {
             setComboBoxes();
-            idTextField.setText(String.valueOf(customers.get(customers.size()-1).getCustomerId()+2));
+            idTextField.setText(String.valueOf(customers.get(customers.size()-1).getCustomerId()+1));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
