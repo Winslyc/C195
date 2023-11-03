@@ -5,19 +5,14 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginPageController">
+<AnchorPane prefHeight="251.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginPageController">
    <children>
-      <Pane layoutX="363.0" prefHeight="43.0" prefWidth="237.0" style="-fx-background-color: #1dfa32;">
-         <children>
-            <Label fx:id="Location" layoutY="13.0" prefHeight="17.0" prefWidth="237.0" text="Location:" />
-         </children>
-      </Pane>
-      <PasswordField fx:id="PasswordField" layoutX="199.0" layoutY="257.0" promptText="Password" />
-      <Button fx:id="LoginButton" layoutX="199.0" layoutY="302.0" mnemonicParsing="false" onAction="#onSubmitLogin" text="Login" />
-      <TextField fx:id="UsernameField" layoutX="199.0" layoutY="200.0" promptText="Username" />
-      <Label fx:id="password" layoutX="199.0" layoutY="240.0" text="Password" />
-      <Label fx:id="Username" layoutX="201.0" layoutY="173.0" text="Username" />
+      <PasswordField fx:id="PasswordField" layoutX="90.0" layoutY="135.0" promptText="Password" />
+      <Button fx:id="LoginButton" layoutX="142.0" layoutY="170.0" mnemonicParsing="false" onAction="#onSubmitLogin" text="Login" />
+      <TextField fx:id="UsernameField" layoutX="90.0" layoutY="71.0" promptText="Username" />
+      <Label fx:id="password" layoutX="90.0" layoutY="108.0" text="Password" />
+      <Label fx:id="Username" layoutX="90.0" layoutY="45.0" text="Username" />
+      <Label fx:id="Location" layoutX="60.0" layoutY="209.0" prefHeight="17.0" prefWidth="237.0" text="Location:" />
    </children>
 </AnchorPane>
