@@ -106,9 +106,9 @@ public class NewAppointmentController implements Initializable {
            Alerter.displayAlert("Time Error", "End Time Cannot begin before Start Date and Time","");
        } else if(startDateTime.isBefore(LocalDateTime.now())){
            Alerter.displayAlert("Time Error", "Start Time Cannot Be Set in the past.", "");
-        }
+        } else if(!AppointmentsAccess.appointmentsOverlap(customer, startDateTime)){
 
-        else{ Appointment newAppointment = new Appointment(id, title, description, location, type, startDateTime,endDateTime,customer,user,contactID);
+       } else{ Appointment newAppointment = new Appointment(id, title, description, location, type, startDateTime,endDateTime,customer,user,contactID);
             AppointmentsAccess.addNewAppointment(newAppointment);
             Parent parent = FXMLLoader.load(getClass().getResource("/View/Appointments.fxml"));
             Scene scene = new Scene(parent);

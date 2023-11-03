@@ -1,5 +1,6 @@
 package DAO;
 
+import Helper.Alerter;
 import Helper.JDBC;
 import Model.Appointment;
 import Model.Customer;
@@ -10,6 +11,8 @@ import javafx.collections.transformation.FilteredList;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public abstract class AppointmentsAccess {
     /**
@@ -127,7 +130,7 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         FilteredList<Appointment> filteredWeekAppts = new FilteredList<>(monthAppointment);
         filteredWeekAppts.setPredicate(appointment -> {
             LocalDateTime apptDate = appointment.getStartDateandTime();
-            return((apptDate.isEqual(loginDateTime) || apptDate.isAfter(loginDateTime) && apptDate.isBefore(loginDateTime.plusDays(30))));
+            return((apptDate.isEqual(loginDateTime) || (apptDate.isAfter(loginDateTime)) && apptDate.isBefore(loginDateTime.plusDays(30))));
         });
         return filteredWeekAppts;
 
@@ -194,5 +197,31 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
             return true;
         }
         return false;
+    }
+
+    public static boolean appointmentsOverlap(int customer, LocalDateTime time) throws SQLException {
+        ZonedDateTime zoneTime = time.atZone(ZoneId.systemDefault());
+        ZonedDateTime utcStart = zoneTime.withZoneSameInstant(ZoneId.of("UTC"));
+        ZonedDateTime utcEnd = utcStart.plusHours(1);
+        LocalDateTime start = utcStart.toLocalDateTime();
+        LocalDateTime end = utcEnd.toLocalDateTime();
+        String sql = "SELECT * FROM Appointments \n" +
+                "WHERE Customer_ID=" + customer + "\n" +
+                "AND ('" + start + "'>= start AND '" + start + "'<= end)\n" +
+                "OR ('" + end + "'>= start AND '" + end + "'<= end)";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        int overlappingAppts = 0;
+
+        while (rs.next()) {
+            overlappingAppts++;
+        }
+        if (overlappingAppts > 0) {
+            Alerter.confirmAction("Unable to create appointment", "This appointment overlaps with another. Please choose a different time or date.");
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }
