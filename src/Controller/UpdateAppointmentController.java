@@ -183,8 +183,6 @@ Converts Strings dateValue and timeValue to a Local Date Time Object
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 // Auto Increments appointmentID's
 

@@ -175,10 +175,6 @@ public class ReportsController implements Initializable {
         stage.setResizable(false);
         JDBC.closeConnection();
         stage.show();
-
     }
-
-
-
-    }
+}
 

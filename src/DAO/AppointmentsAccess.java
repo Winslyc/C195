@@ -130,7 +130,7 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         FilteredList<Appointment> filteredWeekAppts = new FilteredList<>(monthAppointment);
         filteredWeekAppts.setPredicate(appointment -> {
             LocalDateTime apptDate = appointment.getStartDateandTime();
-            return((apptDate.isEqual(loginDateTime) || (apptDate.isAfter(loginDateTime)) && apptDate.isBefore(loginDateTime.plusDays(30))));
+            return((apptDate.isEqual(loginDateTime) || (apptDate.isAfter(loginDateTime)) && apptDate.isBefore(loginDateTime.plusMonths(1))));
         });
         return filteredWeekAppts;
 
@@ -148,7 +148,7 @@ allAppointments.add(new Appointment(appointmentID,title,description,location,typ
         FilteredList<Appointment> filteredWeekAppts = new FilteredList<>(weekAppt);
         filteredWeekAppts.setPredicate(appointment -> {
             LocalDateTime apptDate = appointment.getStartDateandTime();
-            return((apptDate.isEqual(loginDateTime) || apptDate.isAfter(loginDateTime) && apptDate.isBefore(loginDateTime.plusDays(30))));
+            return((apptDate.isEqual(loginDateTime) || apptDate.isAfter(loginDateTime) && apptDate.isBefore(loginDateTime.plusWeeks(1))));
         });
         return filteredWeekAppts;
     }
